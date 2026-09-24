@@ -62,7 +62,7 @@ export function SplitText({
   const words = children.split(" ");
 
   return (
-    <Component ref={containerRef as React.RefObject<HTMLElement & HTMLSpanElement>} className={className}>
+    <Component ref={(node) => { containerRef.current = node; }} className={className}>
       {words.map((word, wordIndex) => (
         <span key={wordIndex} className="inline-block overflow-hidden">
           {word.split("").map((char, charIndex) => (

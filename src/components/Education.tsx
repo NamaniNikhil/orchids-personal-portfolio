@@ -5,7 +5,11 @@ import content from "@/data/content.json";
 import { motion } from "framer-motion";
 import { RevealOnScroll } from "@/components/animations/RevealOnScroll";
 
+type Certification = { name: string; issuer: string; year: string };
+
 export function Education() {
+  const certifications = content.certifications as Certification[];
+
   return (
     <section id="education" className="py-28 bg-[#050505] relative overflow-hidden">
       <div className="absolute inset-0">
@@ -99,12 +103,12 @@ export function Education() {
           ))}
         </div>
 
-        {content.certifications.length > 0 && (
+        {certifications.length > 0 && (
           <RevealOnScroll delay={0.3}>
             <div className="mt-14">
               <h3 className="text-2xl font-semibold text-white mb-8 text-center">Certifications</h3>
               <div className="grid sm:grid-cols-2 gap-5">
-                {content.certifications.map((cert, index) => (
+                {certifications.map((cert, index) => (
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.02, y: -4 }}
