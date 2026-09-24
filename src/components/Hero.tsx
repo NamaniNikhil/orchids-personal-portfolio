@@ -1,224 +1,112 @@
 "use client";
 
-import { ArrowDown, Github, Linkedin, Mail, Sparkles } from "lucide-react";
-import content from "@/data/content.json";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-  import { useRef, useEffect } from "react";
-  import { MagneticButton } from "@/components/animations/MagneticButton";
-  
-  export function Hero() {
+import { useRef } from "react";
+import content from "@/data/content.json";
+
+export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  const socialIcons = {
-    github: Github,
-    linkedin: Linkedin,
-    email: Mail,
-  };
-
-    useEffect(() => {
-      if (!titleRef.current) return;
-  
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (prefersReducedMotion) return;
-  
-      // Removed GSAP entrance animation for characters to ensure immediate visibility
-    }, []);
-  
-    return (
+  return (
     <section
       ref={containerRef}
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505]"
+      className="relative min-h-[100svh] overflow-hidden bg-[#050505]"
     >
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-900/20 via-[#050505] to-[#050505]" />
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-          className="absolute top-0 left-1/4 w-[800px] h-[800px] bg-gradient-to-br from-cyan-500/30 via-emerald-500/20 to-transparent rounded-full blur-[120px] animate-pulse-glow"
-        />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2, delay: 0.5 }}
-          className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-sky-500/20 via-cyan-500/15 to-transparent rounded-full blur-[100px] animate-pulse-glow"
-          style={{ animationDelay: "2s" }}
-        />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2, delay: 1 }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-[80px]"
-        />
-        
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(34,211,238,0.10),transparent_32%),radial-gradient(circle_at_20%_80%,rgba(16,185,129,0.06),transparent_28%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:linear-gradient(to_bottom,black,transparent_80%)]" />
       </div>
 
       <motion.div
-        style={{ y, opacity, scale }}
-        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+        style={{ y, opacity }}
+        className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-center px-5 pb-20 pt-28 sm:px-8 lg:px-12"
       >
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8"
-        >
-          <span className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-full border border-cyan-500/20 backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-transparent">
-              Available for work
-            </span>
-          </span>
-        </motion.div>
+        <div className="mb-8 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.24em] text-zinc-500">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.65)]" />
+          Data / software / AI engineering
+        </div>
 
-          <h1
-            ref={titleRef}
-            className="text-5xl sm:text-6xl md:text-8xl font-bold text-white mb-8 leading-[1.1] tracking-tight"
-          >
-            <span className="inline-block">
-              Hi, I'm{" "}
-            </span>
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-                {content.personal.name.split("").map((char, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.3,
-                      delay: 0.5 + i * 0.05,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    className="inline-block whitespace-pre"
-                  >
-                    {char}
-                  </motion.span>
-                ))}
-              </span>
-              <motion.span 
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full origin-left"
-              />
-            </span>
+        <div className="max-w-6xl">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-zinc-500">
+            {content.personal.name}
+          </p>
+
+          <h1 className="font-display text-[clamp(4rem,11vw,10.5rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-white">
+            SOFTWARE
+            <br />
+            <span className="text-zinc-500">ENGINEER</span>
           </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-xl sm:text-2xl md:text-3xl text-gray-300 mb-4 font-medium"
-        >
-          {content.personal.title}
-        </motion.p>
+          <div className="mt-10 grid max-w-5xl gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+            <div>
+              <p className="max-w-3xl text-[clamp(1.7rem,3.2vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.04em] text-zinc-100">
+                I build data systems, AI-enabled products, and digital experiences
+                that make complex problems feel obvious.
+              </p>
+            </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="text-lg text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed"
-        >
-          {content.personal.tagline}
-        </motion.p>
+            <div className="lg:pb-1">
+              <p className="max-w-md text-base leading-7 text-zinc-400">
+                Data / software engineer focused on scalable cloud platforms,
+                AI-enabled products, and thoughtful user experiences.
+              </p>
+            </div>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center justify-center gap-3 mb-12"
-          role="list"
-          aria-label="Social media links"
-        >
-          {Object.entries(content.social).map(([platform, url], index) => {
-            const Icon = socialIcons[platform as keyof typeof socialIcons];
-            if (!Icon) return null;
-            return (
-              <MagneticButton key={platform}>
-                <motion.a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.9 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-4 text-gray-400 hover:text-white bg-white/5 rounded-2xl border border-white/10 hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-300 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-[#050505] block"
-                  aria-label={`Visit my ${platform} profile (opens in new tab)`}
-                  role="listitem"
-                >
-                  <Icon size={22} aria-hidden="true" />
-                </motion.a>
-              </MagneticButton>
-            );
-          })}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <MagneticButton>
-            <motion.a
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <a
               href="#projects"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative px-8 py-4 text-base font-semibold text-white rounded-2xl overflow-hidden transition-all duration-300 shadow-[0_0_40px_rgba(34,211,238,0.3)] hover:shadow-[0_0_60px_rgba(34,211,238,0.4)] block"
+              className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition-transform duration-300 hover:-translate-y-0.5"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-emerald-500 to-cyan-600 animate-gradient bg-[length:200%_auto]" />
-              <span className="relative flex items-center gap-2">
-                <Sparkles size={18} className="group-hover:rotate-12 transition-transform" />
-                View My Work
-              </span>
-            </motion.a>
-          </MagneticButton>
-          <MagneticButton>
-            <motion.a
+              View selected work
+              <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+            <a
+              href={content.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-3.5 text-sm font-medium text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/[0.07]"
+            >
+              <Github size={17} />
+              GitHub
+            </a>
+            <a
               href="#contact"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 text-base font-semibold text-white bg-white/5 rounded-2xl border border-white/10 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all duration-300 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-[#050505] block"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-3.5 text-sm font-medium text-zinc-400 transition-colors hover:text-white"
             >
-              Get In Touch
-            </motion.a>
-          </MagneticButton>
-        </motion.div>
-      </motion.div>
+              <Mail size={17} />
+              Contact
+            </a>
+          </div>
+        </div>
 
-      <motion.a
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        href="#about"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-600 hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-[#050505] rounded-full p-2"
-        aria-label="Scroll down to About section"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ArrowDown size={24} aria-hidden="true" />
-        </motion.div>
-      </motion.a>
+        <div className="mt-auto flex items-end justify-between pt-20">
+          <div className="hidden gap-3 sm:flex">
+            <a aria-label="LinkedIn" href={content.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-zinc-600 transition-colors hover:text-white">
+              <Linkedin size={18} />
+            </a>
+            <a aria-label="GitHub" href={content.social.github} target="_blank" rel="noopener noreferrer" className="text-zinc-600 transition-colors hover:text-white">
+              <Github size={18} />
+            </a>
+          </div>
+          <a
+            href="#projects"
+            className="ml-auto flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-600 transition-colors hover:text-zinc-300"
+          >
+            Scroll to explore
+            <ArrowDown size={15} className="animate-bounce" />
+          </a>
+        </div>
+      </motion.div>
     </section>
   );
 }
