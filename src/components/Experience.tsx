@@ -74,11 +74,15 @@ export function Experience() {
                     <span
                       aria-hidden="true"
                       className={`h-2 w-2 rounded-full ${
-                        isCurrent ? "bg-cyan-400 shadow-[0_0_14px_rgba(34,211,238,0.65)]" : "bg-white/20"
+                        isCurrent
+                          ? "bg-cyan-400 shadow-[0_0_14px_rgba(34,211,238,0.65)]"
+                          : "bg-white/20"
                       }`}
                     />
                     <span className="text-sm text-white/35">
-                      {isCurrent ? "Current role" : `Chapter 0${content.experience.length - index}`}
+                      {isCurrent
+                        ? "Current role"
+                        : `Chapter 0${content.experience.length - index}`}
                     </span>
                   </div>
                 </div>
@@ -104,16 +108,16 @@ export function Experience() {
                     {job.description}
                   </p>
 
-                  <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                    {job.achievements.map((achievement, achievementIndex) => (
-                      <div
-                        key={achievementIndex}
+                  <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+                    {job.achievements.map((achievement) => (
+                      <li
+                        key={achievement}
                         className="border-l border-white/10 pl-4 text-sm leading-6 text-white/65 transition-colors duration-300 group-hover:border-cyan-400/30"
                       >
                         {achievement}
-                      </div>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
 
                   <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/8 pt-5">
                     {job.technologies.map((technology) => (
@@ -131,7 +135,7 @@ export function Experience() {
           })}
         </div>
 
-        <div className="mt-10 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-white/25">
+        <div className="mt-10 flex items-center justify-between gap-6 text-xs uppercase tracking-[0.18em] text-white/25">
           <span>Experience / 2019 — Present</span>
           <a
             href="#contact"
