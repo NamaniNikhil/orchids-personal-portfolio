@@ -1,156 +1,125 @@
 "use client";
 
-import { MapPin, Briefcase, Download, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
 import content from "@/data/content.json";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { RevealOnScroll } from "@/components/animations/RevealOnScroll";
 
 export function About() {
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <section id="about" className="py-28 bg-[#050505] relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-cyan-500/10 via-emerald-500/5 to-transparent rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-sky-500/8 to-transparent rounded-full blur-[120px]" />
+    <section
+      id="about"
+      aria-labelledby="about-heading"
+      className="relative overflow-hidden border-t border-white/8 bg-[#050505] py-28 sm:py-36"
+    >
+      <div className="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true">
+        <div className="absolute right-0 top-0 h-[520px] w-[520px] rounded-full bg-cyan-500/5 blur-[160px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.012)_1px,transparent_1px)] bg-[size:64px_64px]" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll>
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-full border border-cyan-500/20 mb-6">
-              <Sparkles size={16} className="text-cyan-400" />
-              <span className="text-sm bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-transparent font-medium">Get to know me</span>
+          <div className="grid gap-8 border-b border-white/10 pb-14 lg:grid-cols-[0.8fr_1.7fr] lg:gap-16">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.28em] text-cyan-400">
+                04 / About
+              </p>
             </div>
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              About <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">Me</span>
-            </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              My journey and experience in building data solutions
-            </p>
+            <div>
+              <h2
+                id="about-heading"
+                className="max-w-4xl text-5xl font-semibold tracking-[-0.055em] text-white sm:text-6xl lg:text-7xl"
+              >
+                I like building systems
+                <span className="text-white/35"> that disappear into the experience.</span>
+              </h2>
+              <p className="mt-7 max-w-2xl text-base leading-7 text-white/50 sm:text-lg">
+                Data engineering is the foundation. Software engineering is the
+                direction. AI is becoming part of the toolkit.
+              </p>
+            </div>
           </div>
         </RevealOnScroll>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <RevealOnScroll x={-50} y={0} delay={0.2}>
-            <div className="relative order-2 lg:order-1">
-              <div className="relative w-full max-w-sm mx-auto lg:max-w-md">
-                <div className="absolute -inset-4 bg-gradient-to-br from-cyan-500/30 via-emerald-500/20 to-sky-500/10 rounded-3xl transform rotate-3 blur-2xl opacity-50" />
-                <div className="absolute -inset-4 bg-gradient-to-tr from-emerald-500/20 to-transparent rounded-3xl transform -rotate-2 blur-xl" />
-                
-                <motion.div 
-                  whileHover={{ scale: 1.02, rotate: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-cyan-500/10"
-                >
-                  <Image
-                    src={content.personal.avatar}
-                    alt={content.personal.name}
-                    width={400}
-                    height={400}
-                    className="w-full aspect-square object-cover"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  viewport={{ once: true }}
-                  className="absolute -bottom-6 -right-6 px-5 py-3 bg-[#0a0a0a]/90 backdrop-blur-xl rounded-2xl border border-cyan-500/30 shadow-lg shadow-cyan-500/10"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                    </span>
-                    <span className="text-sm font-medium text-white">Available for work</span>
-                  </div>
-                </motion.div>
+        <div className="mt-16 grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+          <RevealOnScroll x={-30} y={0}>
+            <div className="relative max-w-md">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#090909]">
+                <Image
+                  src={content.personal.avatar}
+                  alt={content.personal.name}
+                  width={400}
+                  height={400}
+                  className="aspect-square w-full object-cover grayscale transition duration-700 hover:grayscale-0"
+                />
+              </div>
+              <div className="absolute -bottom-5 left-5 flex items-center gap-3 rounded-full border border-white/10 bg-[#090909]/95 px-4 py-2.5 backdrop-blur">
+                <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(103,232,249,0.7)]" />
+                <span className="text-xs uppercase tracking-[0.16em] text-zinc-300">
+                  Available for work
+                </span>
               </div>
             </div>
           </RevealOnScroll>
 
-          <RevealOnScroll x={50} y={0} delay={0.3}>
-            <div className="order-1 lg:order-2">
-              <div className="space-y-8">
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  {content.personal.bio}
-                </p>
+          <RevealOnScroll x={30} y={0} delay={0.08}>
+            <div>
+              <p className="max-w-2xl text-lg leading-8 text-zinc-300 sm:text-xl">
+                I’m a software engineer focused on the intersection of data,
+                cloud platforms, and AI-enabled products. My background is in
+                building reliable pipelines and analytical systems; today I’m
+                extending that foundation into application architecture,
+                automation, and developer-facing experiences.
+              </p>
 
-                <div className="flex flex-wrap gap-3">
-                  <motion.div 
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-white/5 rounded-xl border border-white/10 hover:border-cyan-500/30 transition-all duration-300"
-                  >
-                    <MapPin size={18} className="text-cyan-400" />
-                    <span className="text-gray-300 text-sm font-medium">{content.personal.location}</span>
-                  </motion.div>
-                  <motion.div 
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-white/5 rounded-xl border border-white/10 hover:border-emerald-500/30 transition-all duration-300"
-                  >
-                    <Briefcase size={18} className="text-emerald-400" />
-                    <span className="text-gray-300 text-sm font-medium">{content.personal.title}</span>
-                  </motion.div>
+              <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">
+                <div className="bg-[#090909] p-6">
+                  <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">
+                    Foundation
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-zinc-400">
+                    5+ years across data engineering, analytics platforms, ETL,
+                    warehousing, and cloud delivery.
+                  </p>
                 </div>
+                <div className="bg-[#090909] p-6">
+                  <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">
+                    Direction
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-zinc-400">
+                    Building software and AI systems where infrastructure,
+                    intelligence, and product experience meet.
+                  </p>
+                </div>
+              </div>
 
-                <div className="pt-4">
-                  <div className="flex items-center gap-2 mb-5">
-                    <Sparkles size={18} className="text-cyan-400" />
-                    <h3 className="text-lg font-semibold text-white">Key Highlights</h3>
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {content.personal.highlights.map((highlight, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                        whileHover={{ x: 4 }}
-                        className="flex items-center gap-3 p-4 bg-gradient-to-r from-cyan-500/10 via-emerald-500/5 to-transparent rounded-xl border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300"
-                      >
-                        <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full flex-shrink-0" />
-                        <span className="text-gray-300 text-sm">{highlight}</span>
-                      </motion.div>
-                    ))}
-                  </div>
+              <div className="mt-10 border-t border-white/10 pt-7">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-zinc-500">
+                  <span className="inline-flex items-center gap-2">
+                    <MapPin size={15} aria-hidden="true" />
+                    {content.personal.location}
+                  </span>
+                  <span>{content.personal.highlights[3]}</span>
                 </div>
+              </div>
 
-                <div className="flex flex-wrap gap-4 pt-6">
-                  <motion.a
-                    href={content.personal.resume}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-gradient-to-r from-cyan-600 to-emerald-600 rounded-xl hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
-                  >
-                    <Download size={18} />
-                    Download Resume
-                  </motion.a>
-                  <motion.a
-                    href="#projects"
-                    onClick={(e) => handleSmoothScroll(e, "#projects")}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-white/5 rounded-xl border border-white/10 hover:border-cyan-500/50 transition-all duration-300"
-                  >
-                    View Projects
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </motion.a>
-                </div>
+              <div className="mt-8 flex flex-wrap gap-5">
+                <a
+                  href={content.personal.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-white transition-colors hover:text-cyan-300 focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-4"
+                >
+                  Read resume
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
+                <a
+                  href="#projects"
+                  className="inline-flex items-center gap-2 text-sm text-zinc-500 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-cyan-300 focus-visible:outline-offset-4"
+                >
+                  Explore selected work
+                  <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
               </div>
             </div>
           </RevealOnScroll>
