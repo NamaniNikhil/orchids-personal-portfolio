@@ -65,7 +65,7 @@ export function Hero() {
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
-              className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition-transform duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black transition-transform duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-[#050505]"
             >
               View selected work
               <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -74,14 +74,14 @@ export function Hero() {
               href={content.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-3.5 text-sm font-medium text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/[0.07]"
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-5 py-3.5 text-sm font-medium text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-[#050505]"
             >
               <Github size={17} />
               GitHub
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-3.5 text-sm font-medium text-zinc-400 transition-colors hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-3.5 text-sm font-medium text-zinc-400 transition-colors hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-[#050505]"
             >
               <Mail size={17} />
               Contact
@@ -91,7 +91,7 @@ export function Hero() {
 
         <div className="mt-auto flex items-end justify-between pt-20">
           <div className="hidden gap-3 sm:flex">
-            <a aria-label="LinkedIn" href={content.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-zinc-600 transition-colors hover:text-white">
+            <a aria-label="LinkedIn" href={content.social.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-sm text-zinc-600 transition-colors hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400">
               <Linkedin size={18} />
             </a>
             <a aria-label="GitHub" href={content.social.github} target="_blank" rel="noopener noreferrer" className="text-zinc-600 transition-colors hover:text-white">
@@ -100,7 +100,7 @@ export function Hero() {
           </div>
           <a
             href="#projects"
-            className="ml-auto flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-600 transition-colors hover:text-zinc-300"
+            className="ml-auto flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-600 transition-colors hover:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-[#050505]"
           >
             Scroll to explore
             <ArrowDown size={15} className="animate-bounce" />
