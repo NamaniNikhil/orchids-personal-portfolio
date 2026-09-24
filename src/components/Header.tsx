@@ -54,7 +54,7 @@ export function Header() {
       <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
         <button
           onClick={() => goTo("#home")}
-          className="group text-left"
+          className="group text-left rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-4 focus:ring-offset-[#050505]"
           aria-label="Go to home"
         >
           <span className="block font-display text-base font-semibold tracking-[-0.03em] text-white">
@@ -74,7 +74,7 @@ export function Header() {
                 <button
                   key={item.href}
                   onClick={() => goTo(item.href)}
-                  className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] transition-colors ${
+                  className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400/70 ${
                     active ? "text-white" : "text-zinc-500 hover:text-zinc-200"
                   }`}
                 >
@@ -94,7 +94,7 @@ export function Header() {
 
         <button
           onClick={() => setIsMobileMenuOpen((open) => !open)}
-          className="rounded-full border border-white/10 bg-white/[0.04] p-2.5 text-zinc-300 md:hidden"
+          className="rounded-full border border-white/10 bg-white/[0.04] p-2.5 text-zinc-300 md:hidden focus:outline-none focus:ring-2 focus:ring-cyan-400"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileMenuOpen}
         >
@@ -115,7 +115,7 @@ export function Header() {
                 <button
                   key={item.href}
                   onClick={() => goTo(item.href)}
-                  className={`block w-full border-b border-white/[0.06] py-4 text-left text-sm uppercase tracking-[0.12em] ${
+                  className={`block w-full border-b border-white/[0.06] py-4 text-left text-sm uppercase tracking-[0.12em] focus:outline-none focus:ring-2 focus:ring-cyan-400 ${
                     activeSection === item.href.slice(1) ? "text-white" : "text-zinc-500"
                   }`}
                 >
@@ -126,7 +126,7 @@ export function Header() {
                 href={content.personal.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-black"
+                className="mt-5 block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-[#070707]"
               >
                 Download Resume ↗
               </a>

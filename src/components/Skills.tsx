@@ -1,224 +1,251 @@
 "use client";
 
-import { useState } from "react";
-import { Code2, Database, Wrench, Cloud, Search, Sparkles } from "lucide-react";
+import { useMemo, useState } from "react";
+import {
+  BrainCircuit,
+  Cloud,
+  Code2,
+  Database,
+  Layers3,
+  Search,
+} from "lucide-react";
 import content from "@/data/content.json";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { RevealOnScroll } from "@/components/animations/RevealOnScroll";
 
-const categoryConfig = {
-  languages: { 
-    label: "Languages", 
-    icon: Code2, 
-    color: "#22d3ee",
-    gradient: "from-cyan-500/20 to-cyan-500/5"
+const capabilityConfig = [
+  {
+    id: "software",
+    label: "Software Engineering",
+    icon: Code2,
+    eyebrow: "01 / Software",
+    description: "Application code, automation, APIs, and developer workflows.",
+    skills: ["Python", "TypeScript", "JavaScript", "Git", "Docker", "CI/CD"],
   },
-  databases: { 
-    label: "Databases", 
-    icon: Database, 
-    color: "#38bdf8",
-    gradient: "from-sky-500/20 to-sky-500/5"
+  {
+    id: "data",
+    label: "Data Engineering",
+    icon: Database,
+    eyebrow: "02 / Data",
+    description: "Reliable pipelines, analytical models, warehousing, and transformation.",
+    skills: [
+      "SQL",
+      "Snowflake",
+      "BigQuery",
+      "Redshift",
+      "Azure Synapse",
+      "PostgreSQL",
+      "Airflow",
+      "dbt",
+      "Kafka",
+      "Spark",
+    ],
   },
-  tools: { 
-    label: "Tools & Frameworks", 
-    icon: Wrench, 
-    color: "#10b981",
-    gradient: "from-emerald-500/20 to-emerald-500/5"
+  {
+    id: "ai",
+    label: "AI / ML Engineering",
+    icon: BrainCircuit,
+    eyebrow: "03 / AI",
+    description: "Machine learning foundations and the engineering layer around AI products.",
+    skills: ["Python", "Spark", "SQL"],
   },
-  cloud: { 
-    label: "Cloud Platforms", 
-    icon: Cloud, 
-    color: "#34d399",
-    gradient: "from-teal-500/20 to-teal-500/5"
+  {
+    id: "cloud",
+    label: "Cloud & Platform",
+    icon: Cloud,
+    eyebrow: "04 / Platform",
+    description: "Cloud infrastructure and systems designed for scale and delivery.",
+    skills: ["Azure", "GCP", "AWS", "Docker", "Kubernetes", "CI/CD"],
   },
-};
+] as const;
 
-type CategoryKey = keyof typeof categoryConfig;
+const capabilitySkillSet = new Set(
+  capabilityConfig.flatMap((capability) => capability.skills)
+);
+
+const sourceSkills = Object.values(content.skills).flat();
+
+const allSkills = Array.from(
+  new Set([...sourceSkills, ...capabilitySkillSet])
+);
 
 export function Skills() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<CategoryKey | "all">("all");
+  const [query, setQuery] = useState("");
+  const [activeCapability, setActiveCapability] = useState("all");
 
-  const allSkills = Object.entries(content.skills).flatMap(([category, skills]) =>
-    skills.map((skill) => ({ skill, category: category as CategoryKey }))
-  );
+  const normalizedQuery = query.trim().toLowerCase();
 
-  const filteredSkills = allSkills.filter(({ skill, category }) => {
-    const matchesSearch = skill.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === "all" || category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const filteredCapabilities = useMemo(() => {
+    return capabilityConfig
+      .filter(
+        (capability) =>
+          activeCapability === "all" || capability.id === activeCapability
+      )
+      .map((capability) => ({
+        ...capability,
+        skills: capability.skills.filter((skill) =>
+          normalizedQuery ? skill.toLowerCase().includes(normalizedQuery) : true
+        ),
+        matches:
+          capability.label.toLowerCase().includes(normalizedQuery) ||
+          capability.description.toLowerCase().includes(normalizedQuery),
+      }))
+      .filter(
+        (capability) =>
+          !normalizedQuery || capability.matches || capability.skills.length > 0
+      );
+  }, [activeCapability, normalizedQuery]);
 
-  const groupedFilteredSkills = Object.keys(categoryConfig).reduce((acc, key) => {
-    const categoryKey = key as CategoryKey;
-    acc[categoryKey] = filteredSkills
-      .filter(({ category }) => category === categoryKey)
-      .map(({ skill }) => skill);
-    return acc;
-  }, {} as Record<CategoryKey, string[]>);
-
-  const totalSkills = allSkills.length;
+  const matchedSkillCount = normalizedQuery
+    ? allSkills.filter((skill) => skill.toLowerCase().includes(normalizedQuery)).length
+    : allSkills.length;
 
   return (
-    <section id="skills" className="py-28 bg-[#030303] relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-gradient-to-br from-cyan-500/10 via-emerald-500/5 to-transparent rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-sky-500/10 via-cyan-500/5 to-transparent rounded-full blur-[120px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:48px_48px]" />
+    <section
+      id="skills"
+      aria-labelledby="skills-heading"
+      className="relative overflow-hidden border-t border-white/8 bg-[#030303] py-28 sm:py-36"
+    >
+      <div className="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true">
+        <div className="absolute left-0 top-1/4 h-[520px] w-[520px] rounded-full bg-cyan-500/5 blur-[160px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.012)_1px,transparent_1px)] bg-[size:64px_64px]" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll>
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-full border border-cyan-500/20 mb-6">
-              <Sparkles size={16} className="text-cyan-400" />
-              <span className="text-sm bg-gradient-to-r from-cyan-300 to-emerald-300 bg-clip-text text-transparent font-medium">Technical Arsenal</span>
+          <div className="grid gap-8 border-b border-white/10 pb-14 lg:grid-cols-[0.8fr_1.7fr] lg:gap-16">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.28em] text-cyan-400">
+                03 / Capabilities
+              </p>
             </div>
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Skills & <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">Technologies</span>
-            </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              {totalSkills}+ technologies I use to build scalable data solutions
-            </p>
+            <div>
+              <h2
+                id="skills-heading"
+                className="max-w-4xl text-5xl font-semibold tracking-[-0.055em] text-white sm:text-6xl lg:text-7xl"
+              >
+                The tools matter.
+                <span className="text-white/35"> The systems matter more.</span>
+              </h2>
+              <p className="mt-7 max-w-2xl text-base leading-7 text-white/50 sm:text-lg">
+                A capability-focused view of the technologies I use to build
+                data platforms, software systems, and AI-enabled products.
+              </p>
+            </div>
           </div>
         </RevealOnScroll>
 
-        <RevealOnScroll delay={0.1}>
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-12">
-            <div className="relative w-full sm:w-72">
-              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search skills..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3.5 bg-white/5 rounded-xl border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all duration-300"
+        <RevealOnScroll delay={0.08}>
+          <div className="mt-10 flex flex-col gap-5 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between">
+            <label className="relative block w-full lg:max-w-sm">
+              <span className="sr-only">Search capabilities and technologies</span>
+              <Search
+                size={16}
+                aria-hidden="true"
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600"
               />
-            </div>
+              <input
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search technologies..."
+                className="w-full border-b border-white/15 bg-transparent py-3 pl-10 pr-4 text-sm text-white placeholder:text-zinc-600 focus:border-cyan-300 focus:outline-none"
+              />
+            </label>
 
-            <div className="flex flex-wrap gap-2 justify-center">
-              <motion.button
-                onClick={() => setActiveCategory("all")}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`px-5 py-2.5 text-sm font-medium rounded-xl transition-all duration-300 ${
-                  activeCategory === "all"
-                    ? "bg-gradient-to-r from-cyan-600 to-emerald-600 text-white shadow-lg shadow-cyan-500/25"
-                    : "bg-white/5 text-gray-400 hover:text-white border border-white/10 hover:border-cyan-500/30"
-                }`}
+            <div
+              className="flex flex-wrap gap-2"
+              role="group"
+              aria-label="Filter capabilities"
+            >
+              <button
+                type="button"
+                aria-pressed={activeCapability === "all"}
+                onClick={() => setActiveCapability("all")}
+                className={activeCapability === "all"
+                  ? "rounded-full bg-white px-4 py-2 text-xs font-medium text-black"
+                  : "rounded-full border border-white/10 px-4 py-2 text-xs text-zinc-500 transition-colors hover:border-white/20 hover:text-white"}
               >
                 All
-              </motion.button>
-              {Object.entries(categoryConfig).map(([key, config]) => (
-                <motion.button
-                  key={key}
-                  onClick={() => setActiveCategory(key as CategoryKey)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`px-5 py-2.5 text-sm font-medium rounded-xl transition-all duration-300 ${
-                    activeCategory === key
-                      ? "text-white shadow-lg"
-                      : "bg-white/5 text-gray-400 hover:text-white border border-white/10"
-                  }`}
-                  style={{
-                    backgroundColor: activeCategory === key ? config.color : undefined,
-                    boxShadow: activeCategory === key ? `0 10px 30px -10px ${config.color}60` : undefined,
-                  }}
+              </button>
+              {capabilityConfig.map((capability) => (
+                <button
+                  type="button"
+                  key={capability.id}
+                  aria-pressed={activeCapability === capability.id}
+                  onClick={() => setActiveCapability(capability.id)}
+                  className={activeCapability === capability.id
+                    ? "rounded-full border border-cyan-300/40 bg-cyan-300/10 px-4 py-2 text-xs font-medium text-cyan-200"
+                    : "rounded-full border border-white/10 px-4 py-2 text-xs text-zinc-500 transition-colors hover:border-white/20 hover:text-white"}
                 >
-                  {config.label}
-                </motion.button>
+                  {capability.label}
+                </button>
               ))}
             </div>
           </div>
         </RevealOnScroll>
 
-        <div className="grid sm:grid-cols-2 gap-6">
-          <AnimatePresence mode="popLayout">
-            {Object.entries(categoryConfig).map(([key, config], categoryIndex) => {
-              const categoryKey = key as CategoryKey;
-              const skills = groupedFilteredSkills[categoryKey];
-              const Icon = config.icon;
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-2">
+          {filteredCapabilities.map((capability, index) => {
+            const Icon = capability.icon;
 
-              if (skills.length === 0) return null;
-
-              return (
-                <motion.div
-                  key={key}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                  transition={{ duration: 0.4, delay: categoryIndex * 0.05 }}
-                  className="relative p-6 bg-[#0a0a0a]/80 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-500 group overflow-hidden"
-                >
-                  <div 
-                    className={`absolute inset-0 bg-gradient-to-br ${config.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} 
-                  />
-                  <div 
-                    className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500"
-                    style={{ backgroundColor: config.color }}
-                  />
-
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-4 mb-6">
-                      <motion.div 
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        className="p-3.5 rounded-xl transition-all duration-300"
-                        style={{ backgroundColor: `${config.color}20` }}
-                      >
-                        <Icon size={24} style={{ color: config.color }} />
-                      </motion.div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white">{config.label}</h3>
-                        <p className="text-sm text-gray-500">{skills.length} skills</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      <AnimatePresence mode="popLayout">
-                        {skills.map((skill, index) => (
-                          <motion.span
-                            key={skill}
-                            layout
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.2, delay: index * 0.03 }}
-                            whileHover={{ scale: 1.08, y: -2 }}
-                            className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/5 rounded-xl border border-white/10 transition-all duration-300 cursor-default hover:text-white hover:bg-white/10"
-                            style={{ 
-                              borderColor: `${config.color}30`,
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.borderColor = config.color;
-                              e.currentTarget.style.boxShadow = `0 0 20px ${config.color}30`;
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.borderColor = `${config.color}30`;
-                              e.currentTarget.style.boxShadow = 'none';
-                            }}
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
-                      </AnimatePresence>
-                    </div>
+            return (
+              <motion.article
+                key={capability.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.55, delay: index * 0.06 }}
+                className="group bg-[#080808] p-7 sm:p-9"
+              >
+                <div className="flex items-start justify-between gap-6">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-700">
+                      {capability.eyebrow}
+                    </p>
+                    <h3 className="mt-4 max-w-sm text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl">
+                      {capability.label}
+                    </h3>
                   </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
+                  <Icon
+                    size={22}
+                    aria-hidden="true"
+                    className="shrink-0 text-cyan-300/70 transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
+                  />
+                </div>
+
+                <p className="mt-4 max-w-md text-sm leading-6 text-zinc-500">
+                  {capability.description}
+                </p>
+
+                <div className="mt-8 flex flex-wrap gap-x-5 gap-y-3 border-t border-white/8 pt-6">
+                  {capability.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="text-sm text-zinc-300 transition-colors group-hover:text-white"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
 
-        {filteredSkills.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16"
-          >
-            <p className="text-gray-500">No skills found matching your search.</p>
-          </motion.div>
+        {filteredCapabilities.length === 0 && (
+          <div className="py-20 text-center text-sm text-zinc-600">
+            No capabilities match “{query}”.
+          </div>
         )}
+
+        <div className="mt-8 flex items-center justify-between text-xs uppercase tracking-[0.16em] text-zinc-700">
+          <span className="inline-flex items-center gap-2">
+            <Layers3 size={13} aria-hidden="true" />
+            Capability map
+          </span>
+          <span>{matchedSkillCount} technologies indexed</span>
+        </div>
       </div>
     </section>
   );
