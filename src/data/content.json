@@ -1,10 +1,10 @@
 {
   "personal": {
     "name": "Nikhil Namani",
-    "title": "Data Engineer",
-    "tagline": "Transforming raw data into actionable insights",
+    "title": "Software Engineer",
+    "tagline": "Data / software / AI engineering",
     "bio": "Data Engineer with 5+ years of experience designing and implementing scalable data solutions across cloud platforms. I specialize in building robust ETL/ELT pipelines, data warehousing, and enabling data-driven decision making for organizations. Passionate about leveraging modern data stack technologies to solve complex business problems.",
-    "email": "nikhiln99919@example.com",
+    "email": "namaninikhil25@gmail.com",
     "location": "USA",
     "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
     "resume": "/resume.pdf",
@@ -18,7 +18,7 @@
   "social": {
     "github": "https://github.com/NamaniNikhil",
     "linkedin": "https://linkedin.com/in/namani-nikhil",
-    "email": "mailto:UPDATE_EMAIL@example.com"
+    "email": "mailto:namaninikhil25@gmail.com"
   },
   "skills": {
     "languages": ["Python", "SQL", "TypeScript", "JavaScript"],
