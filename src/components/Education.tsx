@@ -99,7 +99,7 @@ export function Education() {
           ))}
         </div>
 
-        {content.certifications && content.certifications.length > 0 && content.certifications[0].name !== "UPDATE_CERTIFICATION_NAME" && (
+        {content.certifications.length > 0 && (
           <RevealOnScroll delay={0.3}>
             <div className="mt-14">
               <h3 className="text-2xl font-semibold text-white mb-8 text-center">Certifications</h3>
