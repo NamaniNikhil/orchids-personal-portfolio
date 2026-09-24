@@ -22,8 +22,7 @@ export function Projects() {
         project.title.toLowerCase().includes(normalized) ||
         project.description.toLowerCase().includes(normalized) ||
         project.tags.some((item) => item.toLowerCase().includes(normalized));
-      const matchesTag = !tag || project.tags.includes(tag);
-      return matchesQuery && matchesTag;
+      return matchesQuery && (!tag || project.tags.includes(tag));
     });
   }, [query, tag]);
 
@@ -44,12 +43,10 @@ export function Projects() {
               <span className="text-zinc-600">with purpose.</span>
             </h2>
           </div>
-          <div className="max-w-xl lg:justify-self-end">
-            <p className="text-lg leading-8 text-zinc-400">
-              A selection of data platforms, AI products, and engineering systems
-              built around real technical problems—not just technology demos.
-            </p>
-          </div>
+          <p className="max-w-xl text-lg leading-8 text-zinc-400 lg:justify-self-end">
+            A selection of data platforms, AI products, and engineering systems
+            built around real technical problems—not just technology demos.
+          </p>
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-y border-white/[0.08] py-5 sm:flex-row sm:items-center sm:justify-between">
@@ -59,13 +56,15 @@ export function Projects() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search projects"
-              className="w-full bg-transparent py-2 pl-7 text-sm text-white placeholder:text-zinc-600 outline-none"
               aria-label="Search projects"
+              className="w-full bg-transparent py-2 pl-7 text-sm text-white placeholder:text-zinc-600 outline-none"
             />
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2" aria-label="Filter projects by technology">
             <button
+              type="button"
               onClick={() => setTag(null)}
+              aria-pressed={tag === null}
               className={`rounded-full px-3 py-1.5 text-xs transition-colors ${
                 !tag ? "bg-white text-black" : "text-zinc-500 hover:text-white"
               }`}
@@ -74,8 +73,10 @@ export function Projects() {
             </button>
             {tags.map((item) => (
               <button
+                type="button"
                 key={item}
                 onClick={() => setTag(tag === item ? null : item)}
+                aria-pressed={tag === item}
                 className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
                   tag === item
                     ? "border-cyan-300/50 bg-cyan-300/10 text-cyan-200"
@@ -103,7 +104,8 @@ export function Projects() {
                   <div className="relative min-h-[340px] overflow-hidden border-b border-white/[0.08] lg:min-h-[500px] lg:border-b-0 lg:border-r">
                     <img
                       src={project.image}
-                      alt=""
+                      alt={`${project.title} project preview`}
+                      loading={index === 0 ? "eager" : "lazy"}
                       className="absolute inset-0 h-full w-full object-cover opacity-55 grayscale transition duration-700 group-hover:scale-105 group-hover:opacity-75 group-hover:grayscale-0"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/35 to-transparent" />
@@ -124,23 +126,18 @@ export function Projects() {
                           {project.tags[0]}
                         </span>
                         <span className="font-mono text-xs text-zinc-700">
-                          0{index + 1}
+                          {String(index + 1).padStart(2, "0")}
                         </span>
                       </div>
-
                       <h3 className="max-w-xl font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-white sm:text-5xl">
                         {project.title}
                       </h3>
                       <p className="mt-6 max-w-xl text-base leading-7 text-zinc-400">
                         {project.description}
                       </p>
-
                       <div className="mt-8 flex flex-wrap gap-2">
                         {project.tags.slice(0, 7).map((item) => (
-                          <span
-                            key={item}
-                            className="rounded-full border border-white/[0.08] px-3 py-1.5 text-xs text-zinc-500"
-                          >
+                          <span key={item} className="rounded-full border border-white/[0.08] px-3 py-1.5 text-xs text-zinc-500">
                             {item}
                           </span>
                         ))}
@@ -188,22 +185,38 @@ export function Projects() {
                   Experiments & infrastructure
                 </h3>
               </div>
-              <span className="font-mono text-xs text-zinc-700">{String(secondary.length).padStart(2, "0")} projects</span>
+              <span className="font-mono text-xs text-zinc-700">
+                {String(secondary.length).padStart(2, "0")} projects
+              </span>
             </div>
 
             <div className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] md:grid-cols-2">
               {secondary.map((project) => (
                 <article key={project.id} className="bg-[#090909] p-7 transition-colors hover:bg-[#0d0d0d] sm:p-8">
                   <div className="flex items-start justify-between gap-5">
-                    <span className="font-mono text-xs text-zinc-700">#{String(project.id).padStart(2, "0")}</span>
+                    <span className="font-mono text-xs text-zinc-700">
+                      #{String(project.id).padStart(2, "0")}
+                    </span>
                     <div className="flex gap-3">
                       {project.github && (
-                        <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub: ${project.title}`} className="text-zinc-600 hover:text-white">
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`GitHub: ${project.title}`}
+                          className="text-zinc-600 hover:text-white"
+                        >
                           <Github size={17} />
                         </a>
                       )}
                       {project.live && (
-                        <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label={`Live project: ${project.title}`} className="text-zinc-600 hover:text-cyan-300">
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Live project: ${project.title}`}
+                          className="text-zinc-600 hover:text-cyan-300"
+                        >
                           <ExternalLink size={17} />
                         </a>
                       )}
@@ -215,9 +228,7 @@ export function Projects() {
                   <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-500">{project.description}</p>
                   <div className="mt-6 flex flex-wrap gap-2">
                     {project.tags.slice(0, 5).map((item) => (
-                      <span key={item} className="text-xs text-zinc-600">
-                        {item}
-                      </span>
+                      <span key={item} className="text-xs text-zinc-600">{item}</span>
                     ))}
                   </div>
                 </article>
