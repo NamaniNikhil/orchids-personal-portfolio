@@ -22,6 +22,9 @@
   --border: rgba(255, 255, 255, 0.09);
   --input: rgba(255, 255, 255, 0.1);
   --ring: #67e8f9;
+  --page-max-width: 87.5rem;
+  --page-gutter: 1.25rem;
+  --section-space: 7rem;
 }
 
 @layer base {
