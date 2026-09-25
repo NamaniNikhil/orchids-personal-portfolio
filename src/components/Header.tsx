@@ -50,29 +50,26 @@ export function Header() {
     setIsMobileMenuOpen(false);
   };
 
+  const themeLabel = mounted
+    ? resolvedTheme === "dark"
+      ? "Switch to light mode"
+      : "Switch to dark mode"
+    : "Change color theme";
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "border-b border-white/[0.07] bg-[#050505]/75 backdrop-blur-2xl"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
+    <header className={`site-header ${isScrolled ? "site-header-scrolled" : ""}`}>
+      <div className="page-container site-header-inner">
         <button
+          type="button"
           onClick={() => goTo("#home")}
-          className="group text-left rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-4 focus:ring-offset-[#050505]"
+          className="site-brand"
           aria-label="Go to home"
         >
-          <span className="block font-display text-base font-semibold tracking-[-0.03em] text-white">
-            NIKHIL<span className="text-cyan-300">.</span>
-          </span>
-          <span className="mt-0.5 block text-[9px] font-medium uppercase tracking-[0.2em] text-zinc-600">
-            {content.personal.title}
-          </span>
+          <span className="site-brand-name">NIKHIL<span aria-hidden="true">.</span></span>
+          <span className="site-brand-role">{content.personal.title}</span>
         </button>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+        <nav className="site-nav" aria-label="Main navigation">
           {content.navigation
             .filter((item) => !["Home", "Skills", "Education"].includes(item.label))
             .map((item) => {
@@ -80,65 +77,65 @@ export function Header() {
               return (
                 <button
                   key={item.href}
+                  type="button"
                   onClick={() => goTo(item.href)}
-                  className={`rounded-full px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400/70 ${
-                    active ? "text-white" : "text-zinc-500 hover:text-zinc-200"
-                  }`}
+                  className={`site-nav-link ${active ? "site-nav-link-active" : ""}`}
                 >
                   {item.label}
                 </button>
               );
             })}
+        </nav>
+
+        <div className="site-header-actions">
           <a
             href={content.personal.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-3 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-white/30 hover:bg-white/[0.06]"
+            className="site-nav-resume"
           >
-            Resume ↗
+            Resume <span aria-hidden="true">↗</span>
           </a>
-        </nav>
-
-        <button
-          type="button"
-          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-          className="theme-toggle"
-          aria-label={mounted ? (resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Change color theme"}
-          title={mounted ? (resolvedTheme === "dark" ? "Light mode" : "Dark mode") : "Change color theme"}
-        >
-          {mounted && resolvedTheme === "dark" ? (
-            <Sun size={16} aria-hidden="true" />
-          ) : (
-            <Moon size={16} aria-hidden="true" />
-          )}
-        </button>
-
-        <button
-          onClick={() => setIsMobileMenuOpen((open) => !open)}
-          className="rounded-full border border-white/10 bg-white/[0.04] p-2.5 text-zinc-300 md:hidden focus:outline-none focus:ring-2 focus:ring-cyan-400"
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMobileMenuOpen}
-        >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+          <button
+            type="button"
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+            className="theme-toggle"
+            aria-label={themeLabel}
+            title={themeLabel}
+          >
+            {mounted && resolvedTheme === "dark" ? (
+              <Sun size={16} aria-hidden="true" />
+            ) : (
+              <Moon size={16} aria-hidden="true" />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="site-menu-button"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            className="border-b border-white/10 bg-[#070707]/95 px-5 pb-6 pt-2 backdrop-blur-2xl md:hidden"
+            exit={{ opacity: 0, y: -10 }}
+            className="site-mobile-panel"
           >
-            <nav className="mx-auto max-w-[1400px]" aria-label="Mobile navigation">
+            <nav className="page-container" aria-label="Mobile navigation">
               {content.navigation.map((item) => (
                 <button
                   key={item.href}
+                  type="button"
                   onClick={() => goTo(item.href)}
-                  className={`block w-full border-b border-white/[0.06] py-4 text-left text-sm uppercase tracking-[0.12em] focus:outline-none focus:ring-2 focus:ring-cyan-400 ${
-                    activeSection === item.href.slice(1) ? "text-white" : "text-zinc-500"
-                  }`}
+                  className={`site-mobile-link ${activeSection === item.href.slice(1) ? "site-nav-link-active" : ""}`}
                 >
                   {item.label}
                 </button>
@@ -147,9 +144,9 @@ export function Header() {
                 href={content.personal.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 block rounded-full bg-white px-5 py-3 text-center text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-[#070707]"
+                className="editorial-button site-mobile-resume"
               >
-                Download Resume ↗
+                Download resume <span aria-hidden="true">↗</span>
               </a>
             </nav>
           </motion.div>
