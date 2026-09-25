@@ -17,10 +17,10 @@ export default function Home() {
       <Header />
       <main id="main-content" className="min-h-screen bg-[#050505]">
         <Hero />
-        <About />
-        <Skills />
         <Projects />
         <Experience />
+        <Skills />
+        <About />
         <Education />
         <Contact />
       </main>
