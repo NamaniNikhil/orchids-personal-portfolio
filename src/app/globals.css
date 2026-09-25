@@ -199,6 +199,19 @@ html.lenis body {
     line-height: 1.75rem;
     text-wrap: pretty;
   }
+
+  header div[class*="max-w-[1400px]"],
+  footer div[class~="max-w-6xl"] {
+    width: 100%;
+    max-width: var(--page-max-width);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter);
+  }
+
+  header [class~="uppercase"],
+  footer [class~="uppercase"] {
+    text-transform: none !important;
+  }
 }
 
 @media (min-width: 640px) {
