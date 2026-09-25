@@ -5,7 +5,7 @@ import content from "@/data/content.json";
 import Image from "next/image";
 import { RevealOnScroll } from "@/components/animations/RevealOnScroll";
 
-export function About() {
+export function About() { // Phase 7 narrative refinement
   return (
     <section id="about" aria-labelledby="about-heading" className="border-t border-white/10 bg-[#050505] py-28 sm:py-36">
       <div className="page-container">
