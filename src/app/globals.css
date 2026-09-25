@@ -1,4 +1,4 @@
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap');
+@import url("https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -8,73 +8,97 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Satoshi', system-ui, sans-serif;
-  --font-display: 'Clash Display', system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Satoshi", system-ui, sans-serif;
+  --font-display: "Clash Display", system-ui, sans-serif;
+  --font-mono: "Satoshi", system-ui, sans-serif;
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
 }
 
 :root {
-  --background: #050505;
-  --foreground: #f5f5f5;
-  --border: rgba(255, 255, 255, 0.09);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #67e8f9;
+  color-scheme: light;
+  --background: #f4f2ec;
+  --foreground: #11110f;
+  --surface: #ebe8e0;
+  --surface-elevated: #faf9f5;
+  --ink: #11110f;
+  --ink-soft: #555650;
+  --ink-muted: #8a8a83;
+  --border: #d8d5cd;
+  --border-strong: #c3c0b8;
+  --input: #d2cfc7;
+  --ring: #006d77;
+  --accent: #006d77;
+  --accent-strong: #005861;
+  --accent-soft: rgba(0, 109, 119, 0.12);
+  --selection: rgba(0, 109, 119, 0.2);
   --page-max-width: 87.5rem;
   --page-gutter: 1.25rem;
   --section-space: 7rem;
+  --content-measure: 76ch;
+  --rule-weight: 1px;
+  --editorial-radius: 0.25rem;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #050505;
+  --foreground: #f5f5f5;
+  --surface: #090909;
+  --surface-elevated: #0d0d0d;
+  --ink: #f5f5f5;
+  --ink-soft: #b1b1b1;
+  --ink-muted: #777777;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #67e8f9;
+  --accent: #67e8f9;
+  --accent-strong: #a5f3fc;
+  --accent-soft: rgba(103, 232, 249, 0.12);
+  --selection: rgba(103, 232, 249, 0.22);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
+  * { @apply border-border outline-ring/50; }
 
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
-    background: #050505;
+    background: var(--background);
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Satoshi', system-ui, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    font-family: "Satoshi", system-ui, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Clash Display', system-ui, sans-serif;
+    font-family: "Clash Display", system-ui, sans-serif;
   }
 
   ::selection {
-    background: rgba(103, 232, 249, 0.22);
-    color: #fff;
+    background: var(--selection);
+    color: var(--foreground);
   }
 
   :focus-visible {
-    outline: 2px solid #67e8f9;
+    outline: 2px solid var(--ring);
     outline-offset: 3px;
   }
 }
 
 html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
 
 .noise-overlay {
   position: fixed;
@@ -84,162 +108,87 @@ html.lenis body {
   pointer-events: none;
   z-index: 9999;
   opacity: 0.018;
-  background: transparent url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E") repeat;
+  background: transparent url("data:image/svg+xml,%3Csvg viewBox=%270 0 256 256%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27noise%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.8%27 numOctaves=%274%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23noise)%27/%3E%3C/svg%3E") repeat;
 }
 
-
-
 @layer components {
-  /* Shared editorial layout primitives */
-  .page-container {
-    width: 100%;
-    max-width: var(--page-max-width);
-    margin-inline: auto;
-    padding-inline: var(--page-gutter);
-  }
+  .page-container { width: 100%; max-width: var(--page-max-width); margin-inline: auto; padding-inline: var(--page-gutter); }
+  .section-space { padding-block: var(--section-space); }
 
-  .section-space {
-    padding-block: var(--section-space);
-  }
+  .editorial-kicker { font-size: 0.75rem; line-height: 1rem; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .editorial-meta { font-size: 0.75rem; line-height: 1.25rem; font-weight: 500; letter-spacing: 0.06em; color: var(--ink-muted); }
+  .editorial-hero { font-family: "Clash Display", system-ui, sans-serif; font-size: clamp(4rem, 11vw, 10.5rem); font-weight: 600; line-height: 0.82; letter-spacing: -0.075em; text-wrap: balance; }
+  .editorial-heading { font-family: "Clash Display", system-ui, sans-serif; font-size: clamp(3.25rem, 7vw, 7rem); font-weight: 600; line-height: 0.9; letter-spacing: -0.055em; text-wrap: balance; }
+  .editorial-subheading { font-family: "Clash Display", system-ui, sans-serif; font-size: clamp(1.875rem, 3.2vw, 2.75rem); font-weight: 600; line-height: 0.95; letter-spacing: -0.04em; text-wrap: balance; }
+  .editorial-lede { font-size: clamp(1.5rem, 3.2vw, 3.25rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.04em; text-wrap: balance; }
+  .editorial-copy { max-width: var(--content-measure); font-size: 1rem; line-height: 1.75rem; text-wrap: pretty; }
 
-  .editorial-kicker {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: rgb(103 232 249);
+  .editorial-button {
+    display: inline-flex; min-height: 3rem; align-items: center; justify-content: center; gap: 0.75rem;
+    padding: 0.875rem 1.5rem; border: var(--rule-weight) solid var(--ink); border-radius: var(--editorial-radius);
+    background: var(--ink); color: var(--background); font-size: 0.875rem; font-weight: 600;
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
   }
-
-  .editorial-meta {
-    font-size: 0.75rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
+  .editorial-button:hover { transform: translateY(-1px); background: var(--accent); border-color: var(--accent); }
+  .editorial-button-secondary {
+    display: inline-flex; min-height: 3rem; align-items: center; gap: 0.5rem; padding: 0.75rem 0.25rem;
+    border-bottom: var(--rule-weight) solid var(--border-strong); color: var(--ink-soft);
+    transition: color 180ms ease, border-color 180ms ease;
   }
+  .editorial-button-secondary:hover { color: var(--ink); border-color: var(--accent); }
+  .editorial-link { color: var(--ink-soft); text-decoration-line: underline; text-decoration-color: transparent; text-underline-offset: 0.22em; transition: color 180ms ease, text-decoration-color 180ms ease; }
+  .editorial-link:hover { color: var(--ink); text-decoration-color: var(--accent); }
 
-  .editorial-hero {
-    font-family: 'Clash Display', system-ui, sans-serif;
-    font-size: clamp(4rem, 11vw, 10.5rem);
-    font-weight: 600;
-    line-height: 0.82;
-    letter-spacing: -0.075em;
-    text-wrap: balance;
+  .theme-toggle {
+    display: inline-flex; width: 2.25rem; height: 2.25rem; align-items: center; justify-content: center;
+    margin-left: 0.5rem; border: var(--rule-weight) solid var(--border); border-radius: var(--editorial-radius);
+    background: transparent; color: var(--ink-soft);
+    transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
   }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--border-strong); background: var(--accent-soft); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
 
-  .editorial-heading {
-    font-family: 'Clash Display', system-ui, sans-serif;
-    font-size: clamp(3.25rem, 7vw, 7rem);
-    font-weight: 600;
-    line-height: 0.9;
-    letter-spacing: -0.055em;
-    text-wrap: balance;
-  }
-
-  .editorial-subheading {
-    font-family: 'Clash Display', system-ui, sans-serif;
-    font-size: clamp(1.875rem, 3.2vw, 2.75rem);
-    font-weight: 600;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-  }
-
-  .editorial-lede {
-    font-size: clamp(1.5rem, 3.2vw, 3.25rem);
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-  }
-
-  .editorial-copy {
-    font-size: 1rem;
-    line-height: 1.75rem;
-    text-wrap: pretty;
-  }
-
-  /* Phase 2 normalization for the existing section markup */
-  main > section {
-    padding-block: var(--section-space);
-  }
-
+  main > section { padding-block: var(--section-space); }
   main > section > div[class~="max-w-6xl"],
   main > section > div[class~="max-w-4xl"],
   main > section > div[class*="max-w-[1400px]"] {
-    width: 100%;
-    max-width: var(--page-max-width);
-    margin-inline: auto;
-    padding-inline: var(--page-gutter);
+    width: 100%; max-width: var(--page-max-width); margin-inline: auto; padding-inline: var(--page-gutter);
   }
-
-  main > section h2 {
-    font-family: 'Clash Display', system-ui, sans-serif;
-    font-size: clamp(3.25rem, 7vw, 7rem);
-    font-weight: 600;
-    line-height: 0.9;
-    letter-spacing: -0.055em;
-    text-wrap: balance;
-  }
-
-  main > section h3 {
-    font-family: 'Clash Display', system-ui, sans-serif;
-    font-size: clamp(1.875rem, 3.2vw, 2.75rem);
-    font-weight: 600;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-  }
-
-  main > section [class~="uppercase"] {
-    text-transform: none !important;
-  }
-
-  main > section [class~="font-mono"] {
-    font-family: 'Satoshi', system-ui, sans-serif !important;
-  }
-
-  main > section p[class~="text-lg"] {
-    line-height: 1.75rem;
-    text-wrap: pretty;
-  }
-
-  header div[class*="max-w-[1400px]"],
-  footer div[class~="max-w-6xl"] {
-    width: 100%;
-    max-width: var(--page-max-width);
-    margin-inline: auto;
-    padding-inline: var(--page-gutter);
-  }
-
-  header [class~="uppercase"],
-  footer [class~="uppercase"] {
-    text-transform: none !important;
-  }
+  main > section h2 { font-family: "Clash Display", system-ui, sans-serif; font-size: clamp(3.25rem, 7vw, 7rem); font-weight: 600; line-height: 0.9; letter-spacing: -0.055em; text-wrap: balance; }
+  main > section h3 { font-family: "Clash Display", system-ui, sans-serif; font-size: clamp(1.875rem, 3.2vw, 2.75rem); font-weight: 600; line-height: 0.95; letter-spacing: -0.04em; text-wrap: balance; }
+  main > section [class~="uppercase"] { text-transform: none !important; }
+  main > section [class~="font-mono"] { font-family: "Satoshi", system-ui, sans-serif !important; }
+  main > section p[class~="text-lg"] { line-height: 1.75rem; text-wrap: pretty; }
+  header div[class*="max-w-[1400px]"], footer div[class~="max-w-6xl"] { width: 100%; max-width: var(--page-max-width); margin-inline: auto; padding-inline: var(--page-gutter); }
+  header [class~="uppercase"], footer [class~="uppercase"] { text-transform: none !important; }
 }
 
-@media (min-width: 640px) {
-  :root {
-    --page-gutter: 2rem;
-  }
-
-  .editorial-copy {
-    font-size: 1.125rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  :root {
-    --page-gutter: 3rem;
-  }
-}
+@media (min-width: 640px) { :root { --page-gutter: 2rem; } .editorial-copy { font-size: 1.125rem; } }
+@media (min-width: 1024px) { :root { --page-gutter: 3rem; } }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* Phase 7 compatibility layer: existing dark-first utility classes inherit the paper/studio tokens. */
+html:not(.dark) [class*="bg-[#050505"],
+html:not(.dark) [class*="bg-[#030303"],
+html:not(.dark) [class*="bg-[#070707"],
+html:not(.dark) [class*="bg-[#080808"],
+html:not(.dark) [class*="bg-[#090909"],
+html:not(.dark) [class*="bg-[#0d0d0d"] { background-color: var(--background) !important; }
+html:not(.dark) [class*="text-white"] { color: var(--ink) !important; }
+html:not(.dark) [class*="text-zinc-100"],
+html:not(.dark) [class*="text-zinc-200"],
+html:not(.dark) [class*="text-zinc-300"],
+html:not(.dark) [class*="text-zinc-400"] { color: var(--ink-soft) !important; }
+html:not(.dark) [class*="text-zinc-500"],
+html:not(.dark) [class*="text-zinc-600"],
+html:not(.dark) [class*="text-zinc-700"] { color: var(--ink-muted) !important; }
+html:not(.dark) [class*="text-cyan-300"],
+html:not(.dark) [class*="text-cyan-200"] { color: var(--accent) !important; }
+html:not(.dark) [class*="bg-white"] { background-color: var(--ink) !important; }
+html:not(.dark) [class*="text-black"] { color: var(--background) !important; }
+html:not(.dark) [class*="border-white"] { border-color: var(--border) !important; }
+html:not(.dark) [class*="bg-white/"] { background-color: var(--surface) !important; }
+html:not(.dark) [class*="bg-cyan-300/"] { background-color: var(--accent-soft) !important; }

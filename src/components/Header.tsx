@@ -1,14 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import content from "@/data/content.json";
+import { useTheme } from "next-themes";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
 
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 24);
@@ -22,6 +25,10 @@ export function Header() {
         break;
       }
     }
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -91,6 +98,20 @@ export function Header() {
             Resume ↗
           </a>
         </nav>
+
+        <button
+          type="button"
+          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+          className="theme-toggle"
+          aria-label={mounted ? (resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Change color theme"}
+          title={mounted ? (resolvedTheme === "dark" ? "Light mode" : "Dark mode") : "Change color theme"}
+        >
+          {mounted && resolvedTheme === "dark" ? (
+            <Sun size={16} aria-hidden="true" />
+          ) : (
+            <Moon size={16} aria-hidden="true" />
+          )}
+        </button>
 
         <button
           onClick={() => setIsMobileMenuOpen((open) => !open)}
