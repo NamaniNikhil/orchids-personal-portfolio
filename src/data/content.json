@@ -21,161 +21,229 @@
     "email": "mailto:namaninikhil25@gmail.com"
   },
   "skills": {
-    "languages": ["Python", "SQL", "TypeScript", "JavaScript"],
-    "databases": ["Snowflake", "BigQuery", "Redshift", "Azure Synapse", "PostgreSQL"],
-    "tools": ["Airflow", "dbt", "Git", "Docker", "CI/CD", "Kafka", "Spark"],
-    "cloud": ["Azure", "GCP", "AWS"]
+    "languages": [
+      "Python",
+      "SQL",
+      "TypeScript",
+      "JavaScript"
+    ],
+    "databases": [
+      "Snowflake",
+      "BigQuery",
+      "Redshift",
+      "Azure Synapse",
+      "PostgreSQL"
+    ],
+    "tools": [
+      "Airflow",
+      "dbt",
+      "Git",
+      "Docker",
+      "CI/CD",
+      "Kafka",
+      "Spark"
+    ],
+    "cloud": [
+      "Azure",
+      "GCP",
+      "AWS"
+    ]
   },
   "projects": [
     {
-  "id": 1,
-  "title": "Reddit Data Engineering Pipeline",
-  "description": "End-to-end ETL pipeline extracting data from Reddit API using Apache Airflow orchestration, storing raw data in AWS S3, cataloging and transforming with AWS Glue, querying via Amazon Athena, and loading into Redshift data warehouse for analytics.",
-  "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-  "tags": [
-    "Python",
-    "Apache Airflow",
-    "Celery",
-    "PostgreSQL",
-    "AWS S3",
-    "AWS Glue",
-    "Amazon Athena",
-    "Amazon Redshift",
-    "Docker",
-    "ETL"
-  ],
-  "github": "https://github.com/NamaniNikhil/RediditDataEngineering_Project",
-  "live": null,
-  "featured": true
-},
+      "id": 1,
+      "title": "Reddit Data Engineering Pipeline",
+      "description": "End-to-end ETL pipeline extracting data from Reddit API using Apache Airflow orchestration, storing raw data in AWS S3, cataloging and transforming with AWS Glue, querying via Amazon Athena, and loading into Redshift data warehouse for analytics.",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      "tags": [
+        "Python",
+        "Apache Airflow",
+        "Celery",
+        "PostgreSQL",
+        "AWS S3",
+        "AWS Glue",
+        "Amazon Athena",
+        "Amazon Redshift",
+        "Docker",
+        "ETL"
+      ],
+      "github": "https://github.com/NamaniNikhil/RediditDataEngineering_Project",
+      "live": null,
+      "featured": true,
+      "challenge": "Turn Reddit API data into a repeatable, analytics-ready data path.",
+      "system": "Airflow orchestrates extraction, S3 stores raw data, Glue catalogs and transforms it, Athena supports querying, and Redshift serves the warehouse layer.",
+      "result": "A complete source-to-warehouse ETL flow built for downstream analytics."
+    },
     {
-  "id": 2,
-  "title": "Music Streaming Analytics - Data Modeling with PostgreSQL",
-  "description": "Built star schema data warehouse for music streaming service (Sparkify) using PostgreSQL. Designed and implemented fact and dimension tables optimized for song play analytics. Created ETL pipeline in Python to extract data from JSON files, transform records, and load into normalized database tables.",
-  "image": "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=800&h=600&fit=crop",
-  "tags": [
-    "PostgreSQL",
-    "Python",
-    "ETL",
-    "Star Schema",
-    "Data Modeling",
-    "SQL",
-    "Pandas",
-    "Database Design",
-    "Dimensional Modeling"
-  ],
-  "github": "https://github.com/NamaniNikhil/Data-Modelling-With-PostGres",
-  "live": null,
-  "featured": true
-},
+      "id": 2,
+      "title": "Music Streaming Analytics - Data Modeling with PostgreSQL",
+      "description": "Built star schema data warehouse for music streaming service (Sparkify) using PostgreSQL. Designed and implemented fact and dimension tables optimized for song play analytics. Created ETL pipeline in Python to extract data from JSON files, transform records, and load into normalized database tables.",
+      "image": "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=800&h=600&fit=crop",
+      "tags": [
+        "PostgreSQL",
+        "Python",
+        "ETL",
+        "Star Schema",
+        "Data Modeling",
+        "SQL",
+        "Pandas",
+        "Database Design",
+        "Dimensional Modeling"
+      ],
+      "github": "https://github.com/NamaniNikhil/Data-Modelling-With-PostGres",
+      "live": null,
+      "featured": true,
+      "challenge": "Model streaming events so song-play analytics can be queried cleanly and consistently.",
+      "system": "Python extracts JSON events, transforms them into fact and dimension records, and loads a PostgreSQL star schema designed for analytical queries.",
+      "result": "An analytics-ready warehouse structure centered on song-play behavior."
+    },
     {
-  "id": 3,
-  "title": "Customer Churn Prediction with Machine Learning",
-  "description": "Developed machine learning classification model to predict customer churn for telecommunications company. Performed comprehensive EDA, feature engineering, and trained multiple ML algorithms (Logistic Regression, Random Forest, XGBoost, Gradient Boosting). Achieved 80%+ accuracy with optimized models using GridSearchCV hyperparameter tuning.",
-  "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-  "tags": [
-    "Python",
-    "Machine Learning",
-    "Scikit-learn",
-    "XGBoost",
-    "Pandas",
-    "Feature Engineering",
-    "Classification",
-    "Data Analysis",
-    "Predictive Modeling"
-  ],
-  "github": "https://github.com/NamaniNikhil/Predicting-customer-churn",
-  "live": null,
-  "featured": true
-},
+      "id": 3,
+      "title": "Customer Churn Prediction with Machine Learning",
+      "description": "Developed machine learning classification model to predict customer churn for telecommunications company. Performed comprehensive EDA, feature engineering, and trained multiple ML algorithms (Logistic Regression, Random Forest, XGBoost, Gradient Boosting). Achieved 80%+ accuracy with optimized models using GridSearchCV hyperparameter tuning.",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      "tags": [
+        "Python",
+        "Machine Learning",
+        "Scikit-learn",
+        "XGBoost",
+        "Pandas",
+        "Feature Engineering",
+        "Classification",
+        "Data Analysis",
+        "Predictive Modeling"
+      ],
+      "github": "https://github.com/NamaniNikhil/Predicting-customer-churn",
+      "live": null,
+      "featured": true,
+      "challenge": "Identify customers at risk of churn and compare multiple predictive approaches.",
+      "system": "Exploratory analysis and feature engineering feed Logistic Regression, Random Forest, XGBoost, and Gradient Boosting models with GridSearchCV tuning.",
+      "result": "Optimized models reached 80%+ accuracy on the project dataset."
+    },
     {
-  "id": 4,
-  "title": "ResuMate.AI - AI-Powered Resume Builder & ATS Analyzer",
-  "description": "Developed intelligent resume builder web application using Streamlit and AI/NLP technologies. Features include ATS compatibility scoring, resume parsing, keyword optimization, job description matching, and AI-powered content suggestions. Helps job seekers create ATS-friendly resumes with real-time feedback and actionable improvement recommendations.",
-  "image": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&h=600&fit=crop",
-  "tags": [
-    "Python",
-    "Vibecoding",
-    "RAG",
-    "Prompt Engineering",
-    "Made in 11 Prompta",
-    "Hugging Face",
-    "Transformers"
-  
-
-  ],
-  "github": null,
-  "live": null,
-  "featured": false
-},
-{
-  "id": 5,
-  "title": "AI-Driven Portfolio Engine",
-  "description": "A high-performance portfolio framework built with Next.js 15, optimized through advanced Prompt Engineering and automated CI/CD pipelines for seamless deployment.",
-  "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-  "tags": ["Prompt Engineering", "Claude Opus 4.5", "LangChain", "RAG", "Made in 7 Prompts"],
-  "github": null,
-  "live": null,
-  "featured": false
-},
-{
-  "id": 6,
-  "title": "Local RAG Intelligence API",
-  "description": "A production-ready Retrieval-Augmented Generation (RAG) API built with FastAPI that enables private, local document intelligence using vector embeddings.",
-  "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
-  "tags": ["Prompt Engineering", "FastAPI", "ChromaDB", "Ollama"],
-  "github": null,
-  "live": null,
-  "featured": false
-},
-{
-  "id": 7,
-  "title": "Containerized RAG Architecture",
-  "description": "Engineered a portable, high-performance environment for AI workloads by containerizing a RAG API, ensuring consistent deployment across local and cloud environments.",
-  "image": "https://images.unsplash.com/photo-1605719051163-27e3cd10aa78?w=800&h=600&fit=crop",
-  "tags": ["Docker", "Prompt Engineering", "FastAPI", "DevOps Workflow"],
-  "github": "https://github.com/NamaniNikhil",
-  "live": "https://learn.nextwork.org/projects/ai-devops-docker",
-  "featured": false
-},
-{
-  "id": 8,
-  "title": "Scalable AI Orchestration Hub",
-  "description": "Architected a high-availability Kubernetes environment for RAG API services, implementing automated scaling, self-healing pods, and stable service networking for production-grade AI.",
-  "image": "https://images.unsplash.com/photo-1667372339118-158039396783?w=800&h=600&fit=crop",
-  "tags": ["Kubernetes", "Prompt Engineering", "Minikube", "DevOps Workflow"],
-  "github": null,
-  "live": null,
-  "featured": false 
-}
-,
-{
-  "id": 9,
-  "title": "Automated AI Quality Assurance Pipeline",
-  "description": "Engineered a robust CI/CD pipeline using GitHub Actions to automate semantic testing and validation for RAG systems, ensuring deterministic AI responses and production-grade code integrity.",
-  "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&h=600&fit=crop",
-  "tags": ["GitHub Actions", "Prompt Engineering", "CI/CD Workflow", "FastAPI"],
-  "github": null,
-  "live": null,
-  "featured": false
-}
+      "id": 4,
+      "title": "ResuMate.AI - AI-Powered Resume Builder & ATS Analyzer",
+      "description": "Developed intelligent resume builder web application using Streamlit and AI/NLP technologies. Features include ATS compatibility scoring, resume parsing, keyword optimization, job description matching, and AI-powered content suggestions. Helps job seekers create ATS-friendly resumes with real-time feedback and actionable improvement recommendations.",
+      "image": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&h=600&fit=crop",
+      "tags": [
+        "Python",
+        "Vibecoding",
+        "RAG",
+        "Prompt Engineering",
+        "Made in 11 Prompta",
+        "Hugging Face",
+        "Transformers"
+      ],
+      "github": null,
+      "live": null,
+      "featured": false
+    },
+    {
+      "id": 5,
+      "title": "AI-Driven Portfolio Engine",
+      "description": "A high-performance portfolio framework built with Next.js 15, optimized through advanced Prompt Engineering and automated CI/CD pipelines for seamless deployment.",
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+      "tags": [
+        "Prompt Engineering",
+        "Claude Opus 4.5",
+        "LangChain",
+        "RAG",
+        "Made in 7 Prompts"
+      ],
+      "github": null,
+      "live": null,
+      "featured": false
+    },
+    {
+      "id": 6,
+      "title": "Local RAG Intelligence API",
+      "description": "A production-ready Retrieval-Augmented Generation (RAG) API built with FastAPI that enables private, local document intelligence using vector embeddings.",
+      "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
+      "tags": [
+        "Prompt Engineering",
+        "FastAPI",
+        "ChromaDB",
+        "Ollama"
+      ],
+      "github": null,
+      "live": null,
+      "featured": false
+    },
+    {
+      "id": 7,
+      "title": "Containerized RAG Architecture",
+      "description": "Engineered a portable, high-performance environment for AI workloads by containerizing a RAG API, ensuring consistent deployment across local and cloud environments.",
+      "image": "https://images.unsplash.com/photo-1605719051163-27e3cd10aa78?w=800&h=600&fit=crop",
+      "tags": [
+        "Docker",
+        "Prompt Engineering",
+        "FastAPI",
+        "DevOps Workflow"
+      ],
+      "github": "https://github.com/NamaniNikhil",
+      "live": "https://learn.nextwork.org/projects/ai-devops-docker",
+      "featured": false
+    },
+    {
+      "id": 8,
+      "title": "Scalable AI Orchestration Hub",
+      "description": "Architected a high-availability Kubernetes environment for RAG API services, implementing automated scaling, self-healing pods, and stable service networking for production-grade AI.",
+      "image": "https://images.unsplash.com/photo-1667372339118-158039396783?w=800&h=600&fit=crop",
+      "tags": [
+        "Kubernetes",
+        "Prompt Engineering",
+        "Minikube",
+        "DevOps Workflow"
+      ],
+      "github": null,
+      "live": null,
+      "featured": false
+    },
+    {
+      "id": 9,
+      "title": "Automated AI Quality Assurance Pipeline",
+      "description": "Engineered a robust CI/CD pipeline using GitHub Actions to automate semantic testing and validation for RAG systems, ensuring deterministic AI responses and production-grade code integrity.",
+      "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&h=600&fit=crop",
+      "tags": [
+        "GitHub Actions",
+        "Prompt Engineering",
+        "CI/CD Workflow",
+        "FastAPI"
+      ],
+      "github": null,
+      "live": null,
+      "featured": false
+    }
   ],
   "experience": [
     {
-  "id": 1,
-  "company": "Expeditors",
-  "role": "BI Analyst II",
-  "period": "March 2025 – Present",
-  "location": "USA",
-  "description": "Architecting cloud-based analytics solutions within the EXP.O NOW platform to deliver high-performance supply chain insights.",
-  "achievements": [
-    "Orchestrated the migration of legacy on-premises data pipelines to Azure cloud environments using Synapse and Data Fabric.",
-    "Developed scalable data models and ETL/ELT frameworks to transform raw logistics data into usable datasets for Power BI.",
-    "Engineered automated data quality checks and performance optimizations for complex SQL queries across multiple databases.",
-    "Implemented CI/CD workflows and Infrastructure-as-Code to streamline analytics engineering in an Agile environment."
-  ],
-  "technologies": ["Azure Synapse", "Fabric", "Python", "SQL", "Power BI", "dbt", "CI/CD","Airflow","Docker","Kubernetes","ETL/ELT","Githib Co-Pilot"]
-},
+      "id": 1,
+      "company": "Expeditors",
+      "role": "BI Analyst II",
+      "period": "March 2025 – Present",
+      "location": "USA",
+      "description": "Architecting cloud-based analytics solutions within the EXP.O NOW platform to deliver high-performance supply chain insights.",
+      "achievements": [
+        "Orchestrated the migration of legacy on-premises data pipelines to Azure cloud environments using Synapse and Data Fabric.",
+        "Developed scalable data models and ETL/ELT frameworks to transform raw logistics data into usable datasets for Power BI.",
+        "Engineered automated data quality checks and performance optimizations for complex SQL queries across multiple databases.",
+        "Implemented CI/CD workflows and Infrastructure-as-Code to streamline analytics engineering in an Agile environment."
+      ],
+      "technologies": [
+        "Azure Synapse",
+        "Fabric",
+        "Python",
+        "SQL",
+        "Power BI",
+        "dbt",
+        "CI/CD",
+        "Airflow",
+        "Docker",
+        "Kubernetes",
+        "ETL/ELT",
+        "Githib Co-Pilot"
+      ]
+    },
     {
       "id": 2,
       "company": "Sivikon",
@@ -189,7 +257,14 @@
         "Reduced pipeline failure rate by 60% through monitoring improvements",
         "Designed data models supporting business intelligence dashboards"
       ],
-      "technologies": ["Python", "SQL", "Airflow", "dbt", "BigQuery", "GCP"]
+      "technologies": [
+        "Python",
+        "SQL",
+        "Airflow",
+        "dbt",
+        "BigQuery",
+        "GCP"
+      ]
     },
     {
       "id": 3,
@@ -205,7 +280,13 @@
         "Implemented CI/CD pipelines for data infrastructure deployment",
         "Delivered data solutions supporting $100M+ in managed assets"
       ],
-      "technologies": ["Python", "SQL", "Azure Synapse", "Spark", "Azure Data Factory"]
+      "technologies": [
+        "Python",
+        "SQL",
+        "Azure Synapse",
+        "Spark",
+        "Azure Data Factory"
+      ]
     },
     {
       "id": 4,
@@ -219,7 +300,13 @@
         "Created automated reporting dashboards for stakeholders",
         "Maintained data quality standards across multiple data sources"
       ],
-      "technologies": ["Python", "SQL", "PostgreSQL", "Azure", "Power BI"]
+      "technologies": [
+        "Python",
+        "SQL",
+        "PostgreSQL",
+        "Azure",
+        "Power BI"
+      ]
     }
   ],
   "education": [
@@ -229,17 +316,42 @@
       "school": "University of South Florida",
       "location": "Tampa, FL",
       "year": "2024",
-      "highlights": ["Data Engineering", "Machine Learning", "Business Intelligence"]
+      "highlights": [
+        "Data Engineering",
+        "Machine Learning",
+        "Business Intelligence"
+      ]
     }
   ],
   "certifications": [],
   "navigation": [
-    { "label": "Home", "href": "#home" },
-    { "label": "Projects", "href": "#projects" },
-    { "label": "Experience", "href": "#experience" },
-    { "label": "Capabilities", "href": "#skills" },
-    { "label": "About", "href": "#about" },
-    { "label": "Education", "href": "#education" },
-    { "label": "Contact", "href": "#contact" }
+    {
+      "label": "Home",
+      "href": "#home"
+    },
+    {
+      "label": "Projects",
+      "href": "#projects"
+    },
+    {
+      "label": "Experience",
+      "href": "#experience"
+    },
+    {
+      "label": "Capabilities",
+      "href": "#skills"
+    },
+    {
+      "label": "About",
+      "href": "#about"
+    },
+    {
+      "label": "Education",
+      "href": "#education"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
+    }
   ]
 }
