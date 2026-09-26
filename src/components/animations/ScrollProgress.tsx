@@ -12,11 +12,10 @@ export function ScrollProgress() {
 
   useEffect(() => {
     if (!progressRef.current) return;
-
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    gsap.to(progressRef.current, {
+    const tween = gsap.to(progressRef.current, {
       scaleX: 1,
       ease: "none",
       scrollTrigger: {
@@ -27,25 +26,20 @@ export function ScrollProgress() {
       },
     });
 
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 100);
-    };
+    const handleScroll = () => setIsVisible(window.scrollY > 100);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
   }, []);
 
   return (
-    <div
-      className={`fixed top-0 left-0 right-0 h-[3px] z-[100] transition-opacity duration-300 ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      <div
-        ref={progressRef}
-        className="h-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-400 origin-left"
-        style={{ transform: "scaleX(0)" }}
-      />
+    <div className={`scroll-progress ${isVisible ? "scroll-progress-visible" : ""}`}>
+      <div ref={progressRef} className="scroll-progress-bar" style={{ transform: "scaleX(0)" }} />
     </div>
   );
 }
