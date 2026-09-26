@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <ScrollProgress />
       <Header />
-      <main id="main-content" className="min-h-screen bg-[#050505]">
+      <main id="main-content">
         <Hero />
         <Projects />
         <Experience />
@@ -26,7 +26,7 @@ export default function Home() {
       </main>
       <Footer />
       <ScrollToTop />
-      <div className="noise-overlay" />
+      <div className="noise-overlay" aria-hidden="true" />
     </>
   );
 }
