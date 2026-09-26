@@ -15,7 +15,7 @@ export function ScrollProgress() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    gsap.to(progressRef.current, {
+    const tween = gsap.to(progressRef.current, {
       scaleX: 1,
       ease: "none",
       scrollTrigger: {
@@ -32,7 +32,8 @@ export function ScrollProgress() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      tween.scrollTrigger?.kill();
+      tween.kill();
     };
   }, []);
 
