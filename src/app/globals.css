@@ -493,3 +493,33 @@ html:not(.dark) [class*="bg-cyan-300/"] { background-color: var(--accent-soft) !
     transition: none !important;
   }
 }
+
+
+@layer components {
+  .project-media img {
+    filter: grayscale(100%) saturate(0.55);
+    opacity: 0.58;
+    transition: opacity 500ms ease, filter 500ms ease, transform 700ms ease;
+  }
+
+  .project-case:hover .project-media img {
+    opacity: 0.72;
+    filter: grayscale(75%) saturate(0.72);
+    transform: scale(1.015);
+  }
+
+  .project-media-tint {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--background) 12%, transparent),
+      color-mix(in srgb, var(--background) 18%, transparent) 38%,
+      color-mix(in srgb, var(--background) 92%, transparent)
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-media img {
+    transition: none !important;
+  }
+}
