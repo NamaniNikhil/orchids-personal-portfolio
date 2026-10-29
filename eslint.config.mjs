@@ -4,11 +4,10 @@ import { FlatCompat } from "@eslint/eslintrc";
 
 const configDirectory = dirname(fileURLToPath(import.meta.url));
 const compat = new FlatCompat({ baseDirectory: configDirectory });
-
-export default [
-  ...compat.extends("next/core-web-vitals"),
+const nextPreset = compat.extends("next/core-web-vitals");
+const eslintConfig = [
+  ...nextPreset,
   {
-    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts", "node_modules/**"],
     rules: {
       "react/no-unescaped-entities": "off",
       "@next/next/no-img-element": "off",
@@ -27,3 +26,4 @@ export default [
     },
   },
 ];
+export default eslintConfig;
