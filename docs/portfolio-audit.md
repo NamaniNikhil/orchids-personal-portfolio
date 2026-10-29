@@ -109,7 +109,7 @@ Research reviewed live on 2026-10-28. These references informed the prioritizati
 
 ### Implemented on `audit/portfolio-quality-gates`
 - **AUD-001:** Removed `typescript.ignoreBuildErrors` and `eslint.ignoreDuringBuilds` from `next.config.ts` so a production build uses the default type/lint validation gate.
-- **AUD-003:** Replaced `next lint` with `eslint .` and added a `typecheck` script (`tsc --noEmit`) to `package.json`.
+- **AUD-003:** Replaced `next lint` with `eslint .`, added a `typecheck` script (`tsc --noEmit`), and repaired `eslint.config.mjs` to use Node-compatible path resolution and explicit Next.js Core Web Vitals/TypeScript presets after CI exposed the legacy config crash.
 - **CI:** Added explicit `npm run typecheck` and `npm run lint` workflow steps before the production build.
 - **AUD-004:** Improved title/description and added Open Graph, Twitter summary-large-image, and robots metadata; canonical URL is intentionally omitted until deployment origin is verified.
 - **Audit:** this file records evidence and is updated with actual remote status when available.
@@ -117,11 +117,11 @@ Research reviewed live on 2026-10-28. These references informed the prioritizati
 ### Verification state
 - External references reviewed and lessons documented above.
 - Existing main baseline: Actions run #60 succeeded on 2026-09-26.
-- Added a `pull_request` trigger for `main` to the Pages workflow and pushed it in this PR, but GitHub reports no new workflow runs or check-runs for this PR so far; no CI result is claimed.
+- Added a `pull_request` trigger for `main` to the Pages workflow. Initial PR Actions run #61 installed dependencies and passed TypeScript checking, but failed at lint due to an ESLint config serialization error. The config repair is pushed; a fresh run must be checked.
 - Local `npm ci`, `npm run typecheck`, `npm run lint`, production build, browser E2E, responsive visual checks, link reachability, accessibility scan, keyboard/reduced-motion review, console/network capture and Lighthouse/Core Web Vitals are not executable from the GitHub connector-only environment.
 - **Important blocker:** manifest/lockfile dependency mismatch remains unresolved. Do not run `npm ci` until the manifest and lockfile have been reconciled with a real Node/npm environment; avoid speculative lockfile regeneration.
 - Third-party Orchids instrumentation purpose/origin remains unverified; unchanged.
-- PR URL: https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20 (open, not merged). Latest reviewed PR head is `310ce7b0761b4cf4382fbafd72b607806086f183`; GitHub reported mergeable/clean, but reports zero check-runs/statuses and no workflow runs on the branch, so release gates are **not green**. Merge SHA: none.
+- PR URL: https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20 (open, not merged). Latest reviewed PR head is `d48854afee2ee20e6649d943fbea6d1f77427d04`; GitHub reported mergeable/clean, but reports zero check-runs/statuses and no workflow runs on the branch, so release gates are **not green**. Merge SHA: none.
 
 ### Final assessment
 A reproducible audit and focused release-gate improvements are committed to the feature branch. The change must remain unmerged until remote workflow checks run on the latest commit and their results are green, dependency reproducibility is resolved, and the outstanding release gates are either run or clearly agreed as unavailable/non-blocking.
