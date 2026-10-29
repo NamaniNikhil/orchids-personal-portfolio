@@ -1,127 +1,114 @@
 # Portfolio engineering audit
 
 **Repository:** [NamaniNikhil/orchids-personal-portfolio](https://github.com/NamaniNikhil/orchids-personal-portfolio)  
-**Target branch:** `main`  
-**Audit checkpoint:** 2026-10-28  
-**Scope:** source/configuration and GitHub workflow review through repository connector. Local checkout/browser automation is not available through this connection; checks are explicitly marked rather than inferred.
+**Target:** `main`  
+**Updated:** 2026-10-28  
+**Evidence scope:** GitHub repository files, pull requests, Actions metadata and run logs; live external benchmark research.
 
-## 1. Executive summary
+## Executive summary
 
-The repository already has a substantial technical-editorial redesign across the homepage, project case studies, work history, capabilities, about/education, and contact/footer. Preserve that work rather than re-redesigning it. The strongest verified release-quality defect is that the production Next.js configuration ignores TypeScript build errors and ESLint build checks. The lint script also uses `next lint`, which was removed in Next.js 16; the repository package manifest specifies Next.js 15.5.7 while its lockfile root specifies Next.js 16.0.1, React 19.2.0 and a different dependency set. That manifest/lockfile divergence can make installs and CI behaviour non-reproducible.
+This is a Next.js App Router / TypeScript portfolio, styled with Tailwind CSS 4 and supporting animation/theme libraries. The established editorial redesign and factual project content should be preserved. The main release risks verified from repository files and CI are reproducibility (the package manifest and lockfile describe different dependency graphs), and a failing ESLint flat/legacy configuration conversion. Pull request [#20](https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20) already contains the broad audit, metadata and quality-gate changes; this follow-up fixes the specific lint configuration error on that branch rather than opening a duplicate audit PR.
 
-## 2. Architecture and baseline
+**Do not merge until the latest CI run is green.** The execution surface can read/write GitHub but cannot run npm locally or operate a browser, so local build, browser, accessibility and performance results cannot be honestly claimed.
 
-- Next.js App Router with TypeScript and React; static export to `out/` for GitHub Pages.
-- Tailwind CSS 4, Framer Motion/Motion, GSAP, Lenis, theme provider; content-driven sections live under `src/components` and `src/data/content.json`.
-- Deployment workflow: `.github/workflows/deploy.yml`; runs `npm install --legacy-peer-deps`, `npm run build`, uploads `./out`, deploys only from `main`.
-- Main latest observed commit: `8ad453a5609e2712f786a0543d4853483e9cfcd1` (Phase 12 contact/footer polish); Actions run #60 completed successfully on 2026-09-26.
-- Existing work: PRs #1–#19 document a multi-stage redesign; do not duplicate it. Branches observed: `main`, `develop`, and this audit branch.
-- Baseline source/config observations:
-  - `next.config.ts`: `typescript.ignoreBuildErrors: true` and `eslint.ignoreDuringBuilds: true`.
-  - `package.json`: `next: 15.5.7`, `eslint-config-next: ^16.0.1`, lint script `next lint`.
-  - `package-lock.json` root describes `next: 16.0.1`, `react: 19.2.0`, `eslint-config-next: 16.0.1` and a materially different dependency graph than the manifest.
-  - `src/app/layout.tsx` sets only basic title/description metadata; no Open Graph/Twitter metadata observed in this file.
-  - Layout includes externally hosted Orchids browser logging and route messenger scripts, including a wildcard target origin on the route messenger. It also includes a debug/config custom data payload. Confirm whether these integration scripts are required in the public production site; do not remove without validating the integration dependency.
-- Local baseline commands could not be run from the available GitHub connector; remote main Pages build succeeded on the latest observed run. This is not equivalent to local source lint/type-check, browser, accessibility, or runtime validation.
+## Repository architecture and baseline
 
-## 3. External benchmark references and applicable lessons
+- Default/target branch: `main`; GitHub confirms this is `NamaniNikhil/orchids-personal-portfolio`, public, TypeScript, and writable by the connected account.
+- Framework: Next.js App Router, TypeScript, React, Tailwind CSS 4; static export to `out/` and GitHub Pages deployment through `.github/workflows/deploy.yml`.
+- Content is driven partly by `src/data/content.json`; assets/public files and root app components live under `src/` and `public/`.
+- Recent feature work: PRs #1–#19 include a multi-phase editorial portfolio redesign; retain it rather than gratuitously reworking the site.
+- PR #20, `fix: restore portfolio quality gates and metadata`, already existed as an open PR targeting `main` at the start of this follow-up. It has no submitted reviews or inline threads at the latest inspection.
+- Main baseline commit recorded by PR #20: `8ad453a5609e2712f786a0543d4853483e9cfcd1`; prior successful Pages build run #60 is dated 2026-09-26. This only proves that historical run succeeded, not that newly enforced checks pass.
 
-| Reference | URL | Transferable lesson | Applicability |
-|---|---|---|---|
-| Brittany Chiang portfolio | https://brittanychiang.com/ | Strong first-screen identity and role; projects and experience are easy to scan; project descriptions connect technology to purpose. | High; retain this repository's existing case-study hierarchy and ensure project evidence is credible. |
-| Roshis Rai portfolio | https://www.roshis.dev/ | Clear headline, concise capability statement and two high-value calls to action. | High; keep recruiter paths short and obvious on mobile. |
-| Ankit portfolio | https://ankitt.dev/ | Immediate role definition and differentiated typographic scale. | Medium; visual effects are optional, clear hierarchy is the useful principle. |
-| Pravir Raghu portfolio | https://www.pravirraghu.co.za/ | Minimal hero, direct work/contact actions, restrained visual chrome. | High; consistent with this site's editorial design. |
-| Chris Waitt portfolio case study | https://cwaitt.dev/projects/portfolio | Theme support and obvious project/tech navigation. | Medium; preserve theme controls, verify contrast in both themes. |
-| W3C WCAG 2.2 | https://www.w3.org/TR/WCAG22/ | Use testable accessibility criteria, especially focus visibility, target size, keyboard operation, reflow, and contrast. | High; use as manual + automated baseline, not as an automated-certification claim. |
-| web.dev | https://web.dev/ | Prioritize user-centric performance and Core Web Vitals measurement rather than assuming a successful build means a fast page. | High; production field/lab measurements remain to be run. |
-| Next.js TypeScript build configuration | https://nextjs.org/docs/app/api-reference/config/next-config-js/typescript | Ignoring build-time TypeScript errors bypasses a critical safety gate; if disabled, an explicit type-check must run separately. | Very high; directly matches confirmed config. |
-| Next.js ESLint configuration | https://nextjs.org/docs/app/api-reference/config/eslint | Run ESLint as a dedicated CI step; `next lint` is removed in Next.js 16. | Very high; lint script and lockfile indicate a version mismatch risk. |
-| Anthropic engineering best practices | https://www.anthropic.com/engineering/claude-code-best-practices | Explore before editing, use a checklist, and iterate tests after focused changes. | High; used to structure this audit and its verification evidence. |
+## External benchmark references and actionable lessons
 
-Research reviewed live on 2026-10-28. These references informed the prioritization below; no external design was copied.
+Live search and original documentation reviewed 2026-10-28. Examples are design references, not designs to copy.
 
-## 4. Findings with evidence
+| Reference | URL | Lesson applied / relevance |
+|---|---|---|
+| Brittany Chiang | https://brittanychiang.com/ | Clear role and concise opening, strong typographic hierarchy, easy project/experience scan. High relevance; preserve identity and improve scanning, not copy styling. |
+| Roshis Rai | https://www.roshis.dev/ | Concise headline and direct work/contact paths. High relevance for recruiter usability and mobile navigation. |
+| Ankit portfolio | https://ankitt.dev/ | Role definition and deliberate type scale should precede decorative effects. Medium relevance. |
+| Pravir Raghu | https://www.pravirraghu.co.za/ | Restrained chrome and direct calls to action. High relevance to existing editorial design. |
+| Chris Waitt portfolio case study | https://cwaitt.dev/projects/portfolio | Theme-aware presentation and straightforward navigation to work/technologies. Medium relevance; retain theme support and verify contrast. |
+| W3C WCAG 2.2 | https://www.w3.org/TR/WCAG22/ | Check keyboard usability, focus visibility/not obscured, contrast, target size and 320 CSS-pixel reflow; automated scans alone cannot certify conformance. High relevance. |
+| web.dev | https://web.dev/ | Use actual Core Web Vitals and production/lab measurements rather than treating a successful build as performance proof. High relevance; measurements remain unavailable in this environment. |
+| Next.js ESLint docs | https://nextjs.org/docs/app/api-reference/config/eslint | Run ESLint CLI directly; Next.js 16 removed `next lint`. The current config failure is addressed with a compatibility config that avoids the circular legacy plugin schema serialization error. High relevance. |
+| Next.js v16 upgrade guide | https://nextjs.org/docs/app/guides/upgrading/version-16 | Next 16 removes `next lint` and the `eslint` Next config option; configure lint as its own CI command. High relevance. |
+| ESLint configuration guide | https://eslint.org/docs/latest/use/configure/configuration-files | Flat config should be an explicit array and should have intentional ignore paths. High relevance for the fix and CI coverage. |
+| Anthropic engineering best practices | https://www.anthropic.com/engineering/claude-code-best-practices | Explore first, make incremental changes, and repeat tests after focused repairs. Relevant to the documented review/repair loop. |
 
-### AUD-001 — P1: Production build bypasses TypeScript and ESLint gates
-- **Evidence:** `next.config.ts` sets `typescript.ignoreBuildErrors: true` and `eslint.ignoreDuringBuilds: true`.
-- **Risk:** a successful deployment build can ship type errors and lint defects.
-- **Acceptance:** remove these blanket bypasses, or run explicit equivalent type-check and lint steps as required CI gates; deployment cannot be green if either fails.
+## Findings and prioritized checklist
 
-### AUD-002 — P1: Manifest and lockfile disagree on framework/runtime dependencies
-- **Evidence:** `package.json` lists Next.js 15.5.7 and React 19.0.0; the checked-in `package-lock.json` root lists Next.js 16.0.1 and React 19.2.0, along with a materially different dependency list.
-- **Risk:** installs may resolve a different app than the manifest describes; lint command compatibility is uncertain.
-- **Acceptance:** choose one known-good dependency graph based on actual source compatibility, regenerate the lockfile using the repo's configured package manager, and prove `npm ci` + build + lint/type-check work in CI.
+### AUD-001 — P1 — Production validation gates had been disabled
+**Evidence:** baseline `next.config.ts` contained `typescript.ignoreBuildErrors: true` and `eslint.ignoreDuringBuilds: true`. PR #20 removes these settings and adds explicit typecheck/lint CI steps.  
+**Acceptance:** TypeScript check and lint run before production build; no broad bypass remains; actual latest PR workflow passes.  
+**Status:** Code changes present on PR #20's base work; workflow still failing at lint at last observed run.
 
-### AUD-003 — P2: Lint command may not work with locked Next.js 16
-- **Evidence:** `package.json` defines `lint: next lint`; Next.js official guidance says `next lint` is removed starting with Next.js 16 (https://nextjs.org/docs/app/api-reference/config/eslint).
-- **Risk:** lint cannot be reliably invoked in the apparent lockfile environment.
-- **Acceptance:** `npm run lint` runs ESLint CLI successfully and returns non-zero on a deliberate lint error; no suppressions to get a green build.
+### AUD-002 — P1 — Manifest and lockfile dependency graph diverge
+**Evidence:** `package.json` describes Next.js 15.5.7 / React 19.0.0; `package-lock.json` root is named `app`, version `0.1.0`, and describes Next.js 16.0.1 / React 19.2.0 plus a materially different dependency list. CI `npm install --legacy-peer-deps` installs 837 packages and reports 27 advisories (1 low, 12 moderate, 12 high, 2 critical), plus a warning for the declared Next.js 15.5.7 version.  
+**Acceptance:** run the chosen package manager in a real Node environment to regenerate and reconcile the lockfile; prove clean lockfile install + build + lint + typecheck; inspect full advisory paths and resolve applicable direct/transitive vulnerabilities.  
+**Status:** Open; do not guess-regenerate a 300 KB lockfile using repository-contents APIs.
 
-### AUD-004 — P2: SEO/share metadata incomplete in root layout
-- **Evidence:** `src/app/layout.tsx` declares title and description only; no canonical/open-graph/Twitter settings observed there.
-- **Risk:** social preview appearance and canonical/indexing configuration may be incomplete.
-- **Acceptance:** add accurate base metadata and social-sharing metadata using the actual canonical deployment origin only when confirmed; do not invent a production URL. Ensure build exports metadata tags.
+### AUD-003 — P1 — CI lint configuration crashes
+**Evidence:** PR workflow run #67 (head `26abf98821c7130bd54bde9c17cff03bcb76c69e`) completed with failure: installation succeeded; `npm run typecheck` succeeded; `npm run lint` exited 2. Log shows ESLint 9.38.0 / `@eslint/eslintrc` `ConfigValidator.formatErrors` serializing a circular `react` plugin configuration, and production build/upload were skipped.  
+**Implementation on follow-up branch:** replaced the combined `FlatCompat.config({ extends: ["next/core-web-vitals", "next/typescript"], plugins: ["import"] })` conversion with `compat.extends("next/core-web-vitals")`, added explicit ignore entries, and retained existing rule values. This follows the legacy compatibility approach documented by ESLint/Next and removes the extra TypeScript preset/plugin validation path that triggers the circular serialization.  
+**Acceptance:** latest PR workflow must show the lint step completed successfully, then production build and artifact upload pass.  
+**Status:** Implemented on `fix/portfolio-eslint-quality-gate`; a new run is not yet observed.
 
-### AUD-005 — P2: Third-party instrumentation scripts need production-scope review
-- **Evidence:** `src/app/layout.tsx` imports external scripts from a Supabase-hosted public bucket; route messenger is configured with `data-target-origin="*"`, debug enabled, and generic sample custom data.
-- **Risk:** unnecessary third-party requests and broad message-origin configuration in public production pages; actual requirement/receiver is unknown.
-- **Acceptance:** establish whether the integration is required for production; if not, gate it to the development/editor environment. If required, constrain message origin to the exact expected origin and remove debug/example data. Verify the editor integration remains functional.
+### AUD-004 — P2 — Share/SEO metadata was limited
+**Evidence:** baseline `src/app/layout.tsx` had title and description only. PR #20 adds descriptive title/description, Open Graph, Twitter large-image card metadata, and robots; canonical intentionally omitted rather than inventing the production URL.  
+**Acceptance:** output includes accurate title, description, Open Graph/Twitter/robots metadata and no fictional canonical URL.  
+**Status:** Implemented on PR #20; build/rendered HTML not yet reverified after lint fix.
 
-### AUD-006 — P2: Public social/profile and project links need automated reachability validation
-- **Evidence:** `src/data/content.json` contains multiple external project links; some later projects have no repository link while one links only to the profile root.
-- **Risk:** reviewer paths may be less informative or stale.
-- **Acceptance:** automated URL check for every non-null project/social URL; record status and explicitly retain any known-good profile/homepage links without fabricating per-project repositories.
+### AUD-005 — P2 — Third-party Orchids instrumentation requires production-scope review
+**Evidence:** `src/app/layout.tsx` includes external Orchids browser-log and route messenger scripts; the messenger uses `data-target-origin="*"`, debug mode, and generic custom data.  
+**Acceptance:** confirm integration purpose and actual receiver origin before changing it; if used in public production, constrain target origin and remove sample/debug data only after proving editor compatibility.  
+**Status:** Documented, intentionally unchanged due to missing integration/runtime evidence.
 
-### AUD-007 — P3: Local browser/accessibility/performance evidence missing from this execution environment
-- **Evidence:** GitHub connector exposes repository contents and Actions metadata but not a runnable checkout or browser.
-- **Risk:** layout, keyboard, console, network and real responsive behaviour cannot be asserted from source alone.
-- **Acceptance:** CI or a local runner should execute automated accessibility/browser checks at representative desktop/mobile widths; manual keyboard and reduced-motion checks must be recorded separately.
+### AUD-006 — P2 — External portfolio links need reachability validation
+**Evidence:** `src/data/content.json` contains external project/social URLs and some project records intentionally have no specific repository link.  
+**Acceptance:** check every populated URL from a network-capable runner and document broken ones without inventing project links.  
+**Status:** Not executed; no network-capable repository runtime available here.
 
-## 5. Prioritized remediation checklist
+### AUD-007 — P2 — Responsive/accessibility/runtime evidence is absent
+**Evidence:** GitHub repository/Actions connector does not provide a runnable app or browser UI for this task.  
+**Acceptance:** browser-based checks at mobile (320/375/390 CSS px), tablet and desktop; keyboard navigation/focus, reduced motion, 200–400% zoom/reflow; automated WCAG scan plus manual review; inspect console/network and record Lighthouse/Core Web Vitals where available.  
+**Status:** Not executed; explicitly not reported as passed.
 
-| ID | Priority | Required acceptance criteria | Status |
-|---|---|---|---|
-| AUD-001 | P1 | Build cannot pass while TypeScript/lint defects exist; validate exact source in CI. | Identified; implementation requires source/build feedback. |
-| AUD-002 | P1 | `npm ci` uses lockfile consistent with manifest; full production build passes. | Identified; lockfile needs regeneration and CI confirmation. |
-| AUD-003 | P2 | `npm run lint` runs current ESLint CLI; no broad suppressions. | Identified; validate through CI. |
-| AUD-004 | P2 | Correct title/description + share metadata; canonical only with verified deployment URL. | Identified; safe metadata can be added after origin confirmation. |
-| AUD-005 | P2 | Third-party scripts justified, origin constrained, debug/sample settings removed or safely gated. | Requires confirming actual Orchids integration requirements. |
-| AUD-006 | P2 | Script checks all actual non-null outbound URLs and provides reproducible failure output. | Add only in an environment with outbound access. |
-| AUD-007 | P3 | Desktop/mobile browser, keyboard, accessibility and performance checks have recorded evidence. | Blocked by no browser/local runtime in GitHub connector. |
+## Implementation and verification strategy
 
-## 6. Implementation and verification strategy
+1. Continue the existing audit PR's branch instead of duplicating it; this follow-up uses a new branch from the PR's current base work.
+2. Fix lint configuration narrowly and keep the existing rules. Do not weaken assertions or remove check steps.
+3. Treat remote GitHub Actions as the truth source for typecheck/lint/build. Inspect each failing step's job log and rerun after fixes.
+4. Reconcile package manifest + lockfile in a real npm runtime before merge; avoid mass-lockfile edits without a deterministic package-manager result.
+5. Validate third-party scripts only with runtime context; do not change the Orchids/editor integration speculatively.
+6. On a network-capable runner, verify links, browser flows, responsive views, accessibility and performance.
 
-1. Work only on a feature branch. Keep audit evidence separate from speculative changes.
-2. Fix dependency reproducibility first; do not guess between Next.js 15 and 16 while the manifest/lockfile disagree.
-3. Re-enable type and lint gates only after any real baseline failures have been fixed. Add dedicated `typecheck`/lint commands to CI as needed.
-4. Run `npm ci`, type checking, linting, production build, URL checks, responsive browser checks, automated accessibility scans and keyboard/reduced-motion review.
-5. Review exact diff, keep project identity/content factual, and verify Pages deploy after merge.
+## Baseline failures vs. changes in this follow-up
 
-## 7. Baseline failures versus regressions
+**Pre-existing/confirmed:** package/lockfile mismatch; CI lint circular-config exception; reported dependency advisories; prior build bypasses (addressed in PR #20); root metadata limitation (addressed in PR #20); third-party instrumentation scope is unverified.  
+**Follow-up change:** ESLint config adjustment only. No portfolio content or visual redesign is included in this follow-up.  
+**Not run here:** local npm install/clean install, build, browser E2E, visual snapshots, link checks, axe/WCAG scan, manual keyboard/reduced-motion checks, console/network capture, Lighthouse or Core Web Vitals.
 
-- **Pre-existing confirmed defects:** manifest/lockfile mismatch; disabled TypeScript and ESLint build validation; potentially incompatible `next lint` command; limited metadata; wildcard target-origin/debug instrumentation.
-- **Remote baseline:** latest observed main Actions run #60 succeeded on 2026-09-26. This validates that run only, not local lint/type-check or browser/accessibility.
-- **Regressions introduced by this audit branch:** none from application source. This checkpoint documents findings only.
-- **Not executed:** local install/build/lint/type-check, web browser E2E, mobile/tablet visual tests, axe/WCAG scan, route/link reachability, runtime console/network capture, Lighthouse/Core Web Vitals. The connected GitHub operations do not provide a local runtime/browser or npm execution.
+## Current verification results
 
-## 8. Final results
+| Check | Latest evidence | Result |
+|---|---|---|
+| Repository identity and default branch | GitHub repo metadata | Pass |
+| TypeScript check | PR run #67, `npm run typecheck` | Pass for commit `26abf98` |
+| ESLint | PR run #67, `npm run lint` | Fail for `26abf98`; targeted config repair is newer and needs a fresh run |
+| Production build / upload | PR run #67 | Skipped after lint failure |
+| Install | PR run #67 | Succeeded using `npm install --legacy-peer-deps`; dependency warnings/advisories emitted |
+| Lockfile reproducibility | Manifest and lockfile inspection | Fail/unresolved mismatch |
+| Browser/accessibility/performance | No browser/runtime available through connector | Not run |
+| PR reviews and inline threads | GitHub review/thread APIs | None present at last inspection |
+| Merge | GitHub PR state | Not merged; release gates not green |
 
-### Implemented on `audit/portfolio-quality-gates`
-- **AUD-001:** Removed `typescript.ignoreBuildErrors` and `eslint.ignoreDuringBuilds` from `next.config.ts` so a production build uses the default type/lint validation gate.
-- **AUD-003:** Replaced `next lint` with `eslint .`, added a `typecheck` script (`tsc --noEmit`), and repaired `eslint.config.mjs` to use Node-compatible path resolution and explicit Next.js Core Web Vitals/TypeScript presets after CI exposed the legacy config crash.
-- **CI:** Added explicit `npm run typecheck` and `npm run lint` workflow steps before the production build.
-- **AUD-004:** Improved title/description and added Open Graph, Twitter summary-large-image, and robots metadata; canonical URL is intentionally omitted until deployment origin is verified.
-- **Audit:** this file records evidence and is updated with actual remote status when available.
+## PR / merge record
 
-### Verification state
-- External references reviewed and lessons documented above.
-- Existing main baseline: Actions run #60 succeeded on 2026-09-26.
-- Added a `pull_request` trigger for `main` to the Pages workflow. Initial PR Actions run #61 installed dependencies and passed TypeScript checking, but failed at lint due to an ESLint config serialization error. The config repair is pushed; a fresh run must be checked.
-- Observed remote test evidence: `npm install --legacy-peer-deps` succeeded and `npm run typecheck` passed in run #61; `npm run lint` failed on ESLint legacy config validation and the production build was skipped. A follow-up run for the lint repair is not verified. The install log reported 27 dependency vulnerabilities (1 low, 12 moderate, 12 high, 2 critical) and warned that Next.js 15.5.7 is vulnerable per npm advisory output. Local `npm ci`, browser E2E, responsive visual checks, link reachability, accessibility scan, keyboard/reduced-motion review, console/network capture and Lighthouse/Core Web Vitals are not executable from the GitHub connector-only environment.
-- **Important blocker:** manifest/lockfile dependency mismatch remains unresolved. Do not run `npm ci` until the manifest and lockfile have been reconciled with a real Node/npm environment; avoid speculative lockfile regeneration.
-- Third-party Orchids instrumentation purpose/origin remains unverified; unchanged.
-- PR URL: https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20 (open, not merged). Latest audit checkpoint is `89a6d8a28eea9964f140f5f5fb8dfbc9bbdbd804`. Run #61 failed lint; newer runs have not yielded verifiable green status and dependency/security issues remain, so release gates are **not green**. Merge SHA: none.
-
-### Final assessment
-A reproducible audit and focused release-gate improvements are committed to the feature branch. The change must remain unmerged until remote workflow checks run on the latest commit and their results are green, dependency reproducibility is resolved, and the outstanding release gates are either run or clearly agreed as unavailable/non-blocking.
+- Existing PR: https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20 — open, targets `main`; latest verified status remains failing until a newer run proves otherwise.
+- Follow-up branch: `fix/portfolio-eslint-quality-gate`, based on `audit/portfolio-quality-gates`.
+- Follow-up commit: `c1ac465b32b317a1010e0ef6df5bee95555d3e28` — `fix: avoid circular legacy ESLint plugin config`.
+- Merge SHA: none.
+- Do not merge while the latest PR run is not green, the dependency graph is inconsistent, and critical validation remains unexecuted.
