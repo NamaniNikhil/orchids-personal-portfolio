@@ -117,11 +117,11 @@ Research reviewed live on 2026-10-28. These references informed the prioritizati
 ### Verification state
 - External references reviewed and lessons documented above.
 - Existing main baseline: Actions run #60 succeeded on 2026-09-26.
-- New branch CI: requires GitHub Actions run after the last pushed branch commit. The connected GitHub API shows no branch workflow run at the time of last check; no new result is claimed.
+- Added a `pull_request` trigger for `main` to the Pages workflow and pushed it in this PR, but GitHub reports no new workflow runs or check-runs for this PR so far; no CI result is claimed.
 - Local `npm ci`, `npm run typecheck`, `npm run lint`, production build, browser E2E, responsive visual checks, link reachability, accessibility scan, keyboard/reduced-motion review, console/network capture and Lighthouse/Core Web Vitals are not executable from the GitHub connector-only environment.
 - **Important blocker:** manifest/lockfile dependency mismatch remains unresolved. Do not run `npm ci` until the manifest and lockfile have been reconciled with a real Node/npm environment; avoid speculative lockfile regeneration.
 - Third-party Orchids instrumentation purpose/origin remains unverified; unchanged.
-- PR URL: https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20 (open, not merged). Latest reviewed PR head is `4dc036d8430038900504b55f2e844acea900efe6`; GitHub reported mergeable/clean, but reports zero check-runs/statuses and no workflow runs on the branch, so release gates are **not green**. Merge SHA: none.
+- PR URL: https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20 (open, not merged). Latest reviewed PR head is `310ce7b0761b4cf4382fbafd72b607806086f183`; GitHub reported mergeable/clean, but reports zero check-runs/statuses and no workflow runs on the branch, so release gates are **not green**. Merge SHA: none.
 
 ### Final assessment
 A reproducible audit and focused release-gate improvements are committed to the feature branch. The change must remain unmerged until remote workflow checks run on the latest commit and their results are green, dependency reproducibility is resolved, and the outstanding release gates are either run or clearly agreed as unavailable/non-blocking.
