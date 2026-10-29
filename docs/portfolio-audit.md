@@ -121,7 +121,7 @@ Research reviewed live on 2026-10-28. These references informed the prioritizati
 - Local `npm ci`, `npm run typecheck`, `npm run lint`, production build, browser E2E, responsive visual checks, link reachability, accessibility scan, keyboard/reduced-motion review, console/network capture and Lighthouse/Core Web Vitals are not executable from the GitHub connector-only environment.
 - **Important blocker:** manifest/lockfile dependency mismatch remains unresolved. Do not run `npm ci` until the manifest and lockfile have been reconciled with a real Node/npm environment; avoid speculative lockfile regeneration.
 - Third-party Orchids instrumentation purpose/origin remains unverified; unchanged.
-- PR URL and merge SHA: pending current CI evidence and blocker resolution.
+- PR URL: https://github.com/NamaniNikhil/orchids-personal-portfolio/pull/20 (open, not merged). Latest reviewed PR head is `4dc036d8430038900504b55f2e844acea900efe6`; GitHub reported mergeable/clean, but reports zero check-runs/statuses and no workflow runs on the branch, so release gates are **not green**. Merge SHA: none.
 
 ### Final assessment
 A reproducible audit and focused release-gate improvements are committed to the feature branch. The change must remain unmerged until remote workflow checks run on the latest commit and their results are green, dependency reproducibility is resolved, and the outstanding release gates are either run or clearly agreed as unavailable/non-blocking.
