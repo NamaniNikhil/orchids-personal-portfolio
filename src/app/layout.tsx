@@ -7,8 +7,25 @@ import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvide
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Nikhil Namani | Data Engineer",
-  description: "Data Engineer specializing in cloud platforms, data pipelines, and analytics. Building data solutions that drive business insights.",
+  title: "Nikhil Namani | Software Engineer — Data & AI",
+  description:
+    "Nikhil Namani is a software engineer focused on data platforms, reliable pipelines, and AI-enabled software.",
+  openGraph: {
+    title: "Nikhil Namani | Software Engineer — Data & AI",
+    description:
+      "Software engineering, data systems, and AI-enabled projects by Nikhil Namani.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nikhil Namani | Software Engineer — Data & AI",
+    description:
+      "Software engineering, data systems, and AI-enabled projects by Nikhil Namani.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
