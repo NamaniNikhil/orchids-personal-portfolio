@@ -107,8 +107,21 @@ Research reviewed live on 2026-10-28. These references informed the prioritizati
 
 ## 8. Final results
 
-- Research documented with direct source links above.
-- Main baseline identified from repository/Actions APIs.
-- A feature branch checkpoint is prepared for this audit.
-- Full remediation and merge are **not certified by this document alone**. Do not merge until the in-scope quality gates have real, current results and the external instrumentation's purpose is known.
-- PR URL and merge SHA: pending successful implementation, checks, and merge.
+### Implemented on `audit/portfolio-quality-gates`
+- **AUD-001:** Removed `typescript.ignoreBuildErrors` and `eslint.ignoreDuringBuilds` from `next.config.ts` so a production build uses the default type/lint validation gate.
+- **AUD-003:** Replaced `next lint` with `eslint .` and added a `typecheck` script (`tsc --noEmit`) to `package.json`.
+- **CI:** Added explicit `npm run typecheck` and `npm run lint` workflow steps before the production build.
+- **AUD-004:** Improved title/description and added Open Graph, Twitter summary-large-image, and robots metadata; canonical URL is intentionally omitted until deployment origin is verified.
+- **Audit:** this file records evidence and is updated with actual remote status when available.
+
+### Verification state
+- External references reviewed and lessons documented above.
+- Existing main baseline: Actions run #60 succeeded on 2026-09-26.
+- New branch CI: requires GitHub Actions run after the last pushed branch commit. The connected GitHub API shows no branch workflow run at the time of last check; no new result is claimed.
+- Local `npm ci`, `npm run typecheck`, `npm run lint`, production build, browser E2E, responsive visual checks, link reachability, accessibility scan, keyboard/reduced-motion review, console/network capture and Lighthouse/Core Web Vitals are not executable from the GitHub connector-only environment.
+- **Important blocker:** manifest/lockfile dependency mismatch remains unresolved. Do not run `npm ci` until the manifest and lockfile have been reconciled with a real Node/npm environment; avoid speculative lockfile regeneration.
+- Third-party Orchids instrumentation purpose/origin remains unverified; unchanged.
+- PR URL and merge SHA: pending current CI evidence and blocker resolution.
+
+### Final assessment
+A reproducible audit and focused release-gate improvements are committed to the feature branch. The change must remain unmerged until remote workflow checks run on the latest commit and their results are green, dependency reproducibility is resolved, and the outstanding release gates are either run or clearly agreed as unavailable/non-blocking.
