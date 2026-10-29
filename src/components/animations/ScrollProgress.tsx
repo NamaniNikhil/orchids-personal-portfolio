@@ -28,7 +28,6 @@ export function ScrollProgress() {
 
     const handleScroll = () => setIsVisible(window.scrollY > 100);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);

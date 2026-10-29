@@ -10,7 +10,6 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
   const handleScroll = useCallback(() => {
@@ -28,12 +27,7 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
@@ -50,11 +44,8 @@ export function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  const themeLabel = mounted
-    ? resolvedTheme === "dark"
-      ? "Switch to light mode"
-      : "Switch to dark mode"
-    : "Change color theme";
+  const themeLabel =
+    resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode";
 
   return (
     <header className={`site-header ${isScrolled ? "site-header-scrolled" : ""}`}>
@@ -103,7 +94,7 @@ export function Header() {
             aria-label={themeLabel}
             title={themeLabel}
           >
-            {mounted && resolvedTheme === "dark" ? (
+            {resolvedTheme === "dark" ? (
               <Sun size={16} aria-hidden="true" />
             ) : (
               <Moon size={16} aria-hidden="true" />
