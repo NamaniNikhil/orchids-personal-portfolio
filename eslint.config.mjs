@@ -6,9 +6,7 @@ const configDirectory = dirname(fileURLToPath(import.meta.url));
 const compat = new FlatCompat({ baseDirectory: configDirectory });
 
 export default [
-  ...compat.config({
-    extends: ["next/core-web-vitals"],
-  }),
+  ...compat.extends("next/core-web-vitals"),
   {
     ignores: [".next/**", "out/**", "build/**", "next-env.d.ts", "node_modules/**"],
     rules: {
@@ -17,7 +15,6 @@ export default [
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "react-hooks/exhaustive-deps": "off",
-      "react-hooks/set-state-in-effect": "off",
       "import/no-unresolved": "error",
       "import/named": "error",
       "import/default": "error",
