@@ -23,6 +23,13 @@ const eslintConfig = [
       globals: {
         ...globals.browser,
         ...globals.node,
+        React: "readonly",
+        NodeJS: "readonly",
+        NodeListOf: "readonly",
+        HTMLElement: "readonly",
+        HTMLImageElement: "readonly",
+        MouseEvent: "readonly",
+        MessageEvent: "readonly",
       },
       parser: tsParser,
       parserOptions: {
